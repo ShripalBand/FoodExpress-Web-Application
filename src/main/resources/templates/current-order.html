@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Current Order</title>
+</head>
+<body>
+<h1>Current Order</h1>
+<ul>
+    <li th:each="item : ${order.items}">
+        <span th:text="${item.name}"></span> - <span th:text="${item.price}"></span>
+        <form th:action="@{/remove-from-order}" method="post">
+            <input type="hidden" th:value="${item.id}" name="itemId" />
+            <button type="submit">Remove</button>
+        </form>
+    </li>
+</ul>
+<form th:action="@{/confirm}" method="post">
+    <button type="submit">Confirm Order</button>
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

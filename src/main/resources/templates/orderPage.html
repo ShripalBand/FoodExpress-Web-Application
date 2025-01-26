@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FoodExpress - Place Your Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #666;
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #555;
+            color: #fff;
+        }
+
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .col-md-6 {
+            flex: 1;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .quantity-controls button:hover {
+            background-color: #0056b3;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .navbar .menu a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar .actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .profile-icon, .logout-btn {
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .profile-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">FoodExpress</div>
+        <div class="menu">
+            <a th:href="@{/UserUI}">Home</a>
+            <a th:href="@{/}">Service</a>
+            <a th:href="@{/}">About</a>
+            <a th:href="@{/}">Contact Us</a>
+        </div>
+        <div class="actions">
+            <form th:action="@{/logout}" method="get" style="margin: 0;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+            <button class="profile-icon" onclick="toggleUserInfo()">
+                <img src="/images/profileLogo.png" alt="Profile" width="24" height="24"> 
+            </button>
+        </div>
+    </div>
+    <section class="container">
+        <h1 th:text="'Welcome to ' + ${session.restaurant.name} + ' Hotel!'">Welcome to [Restaurant Name] Hotel!</h1>
+        <h2>Place Your Order</h2>
+        <form th:action="@{/calculate-order}" method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Item Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="dish, iter : ${menuItems}">
+                        <td th:text="${iter.index + 1}"></td>
+                        <td th:text="${dish.name}"></td>
+                        <td th:text="${dish.description}"></td>
+                        <td th:text="${dish.price}"></td>
+                        <td>
+                            <div class="quantity-controls">
+                                <button type="button" onclick="decreaseQuantity(this)">-</button>
+                                <input type="number" name="quantity" min="1" value="1" style="width: 50px; text-align: center;">
+                                <button type="button" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="selectedDishes" th:value="${dish.id}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="customerName">Name</label>
+                    <input type="text" id="customerName" name="customerName" th:value="${session.loggedInUser.name}">
+                </div>
+                <div class="col-md-6">
+                    <label for="contactInfo">Contact</label>
+                    <input type="text" id="contactInfo" name="contactInfo" th:value="${session.loggedInUser.contact}">
+                </div>
+            </div>
+
+            <label for="specialInstructions">Address</label>
+            <textarea id="specialInstructions" name="specialInstructions" rows="3" th:text="${session.loggedInUser.address}"></textarea>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </section>
+
+    <script>
+        function decreaseQuantity(button) {
+            const quantityInput = button.nextElementSibling;
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) {
+                quantityInput.value = quantity - 1;
+            }
+        }
+
+        function increaseQuantity(button) {
+            const quantityInput = button.previousElementSibling;
+            let quantity = parseInt(quantityInput.value);
+            quantityInput.value = quantity + 1;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FoodExpress - Place Your Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .col-md-6 {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+   
+    <section class="container">
+        
+         <h1 th:text="'Welcome to ' + ${session.restaurant.name} + ' hotel!' "></h1>
+        <h2>Place Your Order</h2>
+        <form th:action="@{/calculate-order}" method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Item Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="dish, iter : ${menuItems}">
+                        <td th:text="${iter.index + 1}"></td>
+                        <td th:text="${dish.name}"></td>
+                        <td th:text="${dish.description}"></td>
+                        <td>$<span th:text="${dish.price}"></span></td>
+                        <td>
+                            <input type="number" name="quantity" min="1"  value="1">
+                        </td>
+                        <td>
+                            <input type="checkbox" name="selectedDishes" th:value="${dish.id}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+           
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="customerName" placeholder="Customer Name" >
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="contactInfo" placeholder="Contact Information" >
+                </div>
+            </div>
+
+       
+            <textarea name="specialInstructions" rows="3" placeholder="Special Instructions (Optional)"></textarea>
+
+            <button type="submit">PLACE ORDER</button>
+        </form>
+    </section>
+</body>
+</html>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

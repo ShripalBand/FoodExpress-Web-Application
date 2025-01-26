@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Orders</title>
+</head>
+<body>
+<h1>Manage Orders</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.status}"></td>
+        <td>
+            <form th:action="@{/update-status}" method="post">
+                <input type="hidden" th:value="${order.id}" name="orderId" />
+                <select name="status">
+                    <option value="Accepted">Accept</option>
+                    <option value="Prepared">Prepare</option>
+                    <option value="Dispatched">Dispatch</option>
+                </select>
+                <button type="submit">Update</button>
+            </form>
+            <form th:action="@{/cancel}" method="post">
+                <input type="hidden" th:value="${order.id}" name="orderId" />
+                <button type="submit">Cancel</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

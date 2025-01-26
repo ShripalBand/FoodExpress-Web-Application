@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+      margin-top: 50px;
+    }
+    
+    
+    
+     * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #navbar #logo img {
+            border-radius: 30px;
+        }
+
+        /* Navigation Bar */
+        #navbar {
+            display: flex
+        }
+
+        /* Navihation Bar: logo and image */
+        #logo {
+            margin: 10px 34px;
+
+        }
+
+        #logo img {
+            height: 50px;
+            margin: 3px 6px;
+        }
+
+        #navbar {
+            position: relative;
+            top: 0px;
+            left: 0px;
+        }
+
+        #navbar ul {
+            display: flex;
+        }
+
+        #navbar::before {
+            content: "";
+            background-color: rgb(0, 0, 0);
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            /* height: 100%; */
+            height: 70px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        #navbar ul li {
+            list-style: none;
+            font-size: 1.3rem;
+
+        }
+
+        #navbar ul li a {
+            color: black;
+            font-weight: bold;
+            display: block;
+            text-decoration: none;
+            border-radius: 12px;
+            padding: 3px 20px;
+            margin-top: 18px;
+        }
+
+        #navbar ul li a:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .center {
+            text-align: center;
+            justify-content: center;
+        }
+
+        #home {
+            display: flex;
+            flex-direction: column;
+            padding: 3px 200px;
+            /* height: 550px; */
+            height: 400px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #home::before {
+            content: "";
+            background: url('https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')no-repeat center center/cover;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            /* background-repeat: no-repeat; */
+            /* height: 100%; */
+            height: 480px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.89;
+        }
+
+
+        #home h1 {
+            margin: 50px 0px;
+
+        }
+
+        /* Utility classes */
+        .h-primary {
+            font-size: 2.3rem;
+            padding: 12px;
+        }
+
+        .btn {
+            padding: 5px 15px;
+            margin: 30px 30px;
+            border-radius: 7px;
+            cursor: pointer;
+            color: black;
+            border: 2px solid black;
+            background-color: rgb(196, 140, 147);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .servises {
+            display: flex;
+        }
+
+        .box {
+            border: 4px solid rgb(133, 43, 43);
+            background-color: rgb(213, 225, 228);
+            border-radius: 15px;
+            text-align: center;
+            /* margin: 3px 3px; */
+            margin: 3px 3px 15px 3px;
+        }
+
+        .box img {
+            height: 200px;
+            padding: 10px;
+            margin: 10px 10px;
+            border-radius: 80px;
+        }
+
+        .client-item img {
+            height: 110px;
+            margin: 10px 5px;
+        }
+
+        .clients {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #client-section {
+            height: 344px;
+        }
+
+        .client-item img {
+            border-radius: 30px;
+        }
+
+        #client-section::before {
+            content: "";
+            position: absolute;
+            background: url('https://cdn.pixabay.com/photo/2017/06/14/08/20/map-of-the-world-2401458_640.jpg')no-repeat center center/cover;
+
+            height: 320px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        #contact{
+            height: 450px;
+            position: relative;
+            /* border: 2px solid red; */
+        }
+        #contact::before{
+            content: "";
+            position: absolute;
+            background: url('https://media.istockphoto.com/id/1372134479/photo/contact-us-support-service-and-information-connect-concept-females-hands-is-using-mobile.webp?b=1&s=612x612&w=0&k=20&c=6Ge8W35-9HLLtqsZ8lQc72eiYmmTEK-jow0Gb_8zRMs=')no-repeat center center/cover;
+            height: 450px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .contact-box{
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+        }
+
+        .contact-box label{
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .contact-box input, .contact-box textarea{
+            width: 100%;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        /* .form-group{
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+        } */
+        footer{
+            padding: 3px;
+            background-color: black;
+            color: white;
+        }
+        #log{
+            margin-top: 10px;
+            margin-left: 500px;
+
+        }
+        #navbar ul li button {
+            color: black;
+            font-weight: bold;
+            display: block;
+            text-decoration: none;
+            border-radius: 12px;
+            padding: 3px 20px;
+            margin-top: 18px;
+        }
+        #navbar ul li button:hover {
+            background-color: black;
+            color: white;
+        }
+        
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+  </style>
+</head>
+<body>
+<div >
+    <nav id="navbar">
+        <div id="logo">
+            <img src="https://img.lovepik.com/element/45007/2413.png_300.png" alt="MyonlineMail.com">
+        </div>
+        <ul>
+            <li class="items"><a th:href="@{/}">Home</a></li>
+            <li class="items"><a th:href="@{/}">Service</a></li>
+            <li class="items"><a th:href="@{/}">About</a></li>
+            <li class="items"><a th:href="@{/}">Contact Us</a></li>
+            <!-- Conditionally render the login/logout buttons based on user authentication -->
+         
+        </ul>
+    </nav>
+</div>
+
+  <form th:action="@{/check_user}" method="post">
+    <div class="container">
+      <div class="login-container">
+        <h2 class="text-center mb-4">Login</h2>
+        <!-- Display logout success message -->
+		    <div th:if="${param.logout}">
+		        <p>You have been logged out successfully.</p>
+		    </div>
+	       <!-- Error message -->
+	        <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <a th:href="@{/for}" class="d-block ">Forget Password</a>
+        <br></br>
+        <span> Create new account </span><a th:href="@{/SignUp}" class="d-block ">Sign Up</a>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

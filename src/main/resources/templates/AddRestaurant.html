@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Restaurant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        /* Navbar styling */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #343a40;
+            color: white;
+        }
+        #logo {
+            flex: 1;
+        }
+        #logo img {
+            height: 50px;
+            width: auto;
+        }
+        ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex: 2;
+            justify-content: center;
+        }
+        .items {
+            margin: 0 15px;
+        }
+        .items a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        #logout {
+            flex: 1;
+            text-align: right;
+        }
+        #logout a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            background-color:  #007bff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        /* Heading styling */
+        h1 {
+            font-size: 36px;                
+            color: #333;                    
+            text-align: center;             
+            margin-top: 0px;                /* Adjusted margin for space below navbar */
+            margin-bottom: 20px;           
+            padding: 10px 20px;            
+            background-color: #ffcc00;      
+            border-radius: 10px;           
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            text-transform: uppercase;     
+            letter-spacing: 2px; 
+        }
+        /* Form styling */
+        form {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        form input[type="text"],
+        form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form input[type="text"]:focus,
+        form input[type="file"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div id="logo">
+            <img src="https://img.lovepik.com/element/45007/2413.png_300.png" alt="MyonlineMail.com">
+        </div>
+        
+        <ul>
+            <li class="items"><a th:href="@{/home}">Home</a></li>
+            <li class="items"><a th:href="@{/}">Service</a></li>
+            <li class="items"><a th:href="@{/}">About</a></li>
+            <li class="items"><a th:href="@{/}">Contact Us</a></li>
+        </ul>
+        
+        <div id="logout">
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div>
+        <h1>Add Restaurants !!</h1>
+        <form action="/add-restaurant" method="post" enctype="multipart/form-data">
+            <label for="name">Restaurant Name:</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="address">Restaurant Address:</label>
+            <input type="text" name="address" id="address" required>
+
+            <label for="contact">Restaurant Contact:</label>
+            <input type="text" name="contact" id="contact" required>
+
+            <label for="logo">Restaurant Logo:</label>
+            <input type="file" name="logo" id="logo" required>
+
+            <button type="submit">Add Restaurant</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

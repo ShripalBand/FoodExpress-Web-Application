@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Browse Menu</title>
+</head>
+<body>
+<h1>Menu</h1>
+<ul>
+    <li th:each="item : ${menu}">
+        <span th:text="${item.name}"></span> - <span th:text="${item.price}"></span>
+        <form th:action="@{/add-to-order}" method="post">
+            <input type="hidden" th:value="${item.id}" name="itemId" />
+            <button type="submit">Add to Order</button>
+        </form>
+    </li>
+</ul>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

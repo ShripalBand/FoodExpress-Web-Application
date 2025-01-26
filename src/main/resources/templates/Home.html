@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Online Food Delivery Service in India | MyOnlineMeal.com</title>
+    <link rel="stylesheet" media="screen and (max-width: 320px)" href="css/phone.css">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+        <style>
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #navbar #logo img {
+            border-radius: 30px;
+        }
+
+        /* Navigation Bar */
+        #navbar {
+            display: flex
+        }
+
+        /* Navihation Bar: logo and image */
+        #logo {
+            margin: 10px 34px;
+
+        }
+
+        #logo img {
+            height: 50px;
+            margin: 3px 6px;
+        }
+
+        #navbar {
+            position: relative;
+            top: 0px;
+            left: 0px;
+        }
+
+        #navbar ul {
+            display: flex;
+        }
+
+        #navbar::before {
+            content: "";
+            background-color: rgb(0, 0, 0);
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            /* height: 100%; */
+            height: 70px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        #navbar ul li {
+            list-style: none;
+            font-size: 1.3rem;
+
+        }
+
+        #navbar ul li a {
+            color: black;
+            font-weight: bold;
+            display: block;
+            text-decoration: none;
+            border-radius: 12px;
+            padding: 3px 20px;
+            margin-top: 18px;
+        }
+
+        #navbar ul li a:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .center {
+            text-align: center;
+            justify-content: center;
+        }
+
+        #home {
+            display: flex;
+            flex-direction: column;
+            padding: 3px 200px;
+            /* height: 550px; */
+            height: 400px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #home::before {
+            content: "";
+            background: url('https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')no-repeat center center/cover;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            /* background-repeat: no-repeat; */
+            /* height: 100%; */
+            height: 480px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.89;
+        }
+
+
+        #home h1 {
+            margin: 50px 0px;
+
+        }
+
+        /* Utility classes */
+        .h-primary {
+            font-size: 2.3rem;
+            padding: 12px;
+        }
+
+        .btn {
+            padding: 5px 15px;
+            margin: 30px 30px;
+            border-radius: 7px;
+            cursor: pointer;
+            color: black;
+            border: 2px solid black;
+            background-color: rgb(196, 140, 147);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .servises {
+            display: flex;
+        }
+
+        .box {
+            border: 4px solid rgb(133, 43, 43);
+            background-color: rgb(213, 225, 228);
+            border-radius: 15px;
+            text-align: center;
+            /* margin: 3px 3px; */
+            margin: 3px 3px 15px 3px;
+        }
+
+        .box img {
+            height: 200px;
+            padding: 10px;
+            margin: 10px 10px;
+            border-radius: 80px;
+        }
+
+        .client-item img {
+            height: 110px;
+            margin: 10px 5px;
+        }
+
+        .clients {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #client-section {
+            height: 344px;
+        }
+
+        .client-item img {
+            border-radius: 30px;
+        }
+
+        #client-section::before {
+            content: "";
+            position: absolute;
+            background: url('https://cdn.pixabay.com/photo/2017/06/14/08/20/map-of-the-world-2401458_640.jpg')no-repeat center center/cover;
+
+            height: 320px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        #contact{
+            height: 450px;
+            position: relative;
+            /* border: 2px solid red; */
+        }
+        #contact::before{
+            content: "";
+            position: absolute;
+            background: url('https://media.istockphoto.com/id/1372134479/photo/contact-us-support-service-and-information-connect-concept-females-hands-is-using-mobile.webp?b=1&s=612x612&w=0&k=20&c=6Ge8W35-9HLLtqsZ8lQc72eiYmmTEK-jow0Gb_8zRMs=')no-repeat center center/cover;
+            height: 450px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .contact-box{
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+        }
+
+        .contact-box label{
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .contact-box input, .contact-box textarea{
+            width: 100%;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        /* .form-group{
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+        } */
+        footer{
+            padding: 3px;
+            background-color: black;
+            color: white;
+        }
+        #log{
+            margin-top: 10px;
+            margin-left: 500px;
+
+        }
+        #navbar ul li button {
+            color: black;
+            font-weight: bold;
+            display: block;
+            text-decoration: none;
+            border-radius: 12px;
+            padding: 3px 20px;
+            margin-top: 18px;
+        }
+        #navbar ul li button:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="navbar">
+        <div id="logo">
+            <img src="https://img.lovepik.com/element/45007/2413.png_300.png" alt="MyonlineMail.com">
+        </div>
+        <ul>
+            <!-- <li class="items"><a href="#">Home</a></li>
+            <li class="items"><a href="#">Servise</a></li>
+            <li class="items"><a href="#">About</a></li>
+            <li class="items"><a href="#">Contact Us</a></li>
+            <li><button class="items" id="log">Log in<a href="#"></a></button></li> -->
+            <li class="items"><a th:href="@{/}">Home</a></li>
+            <li class="items"><a th:href="@{/services}">Service</a></li>
+            <li class="items"><a th:href="@{/about}">About</a></li>
+            <li class="items"><a th:href="@{/contact}">Contact Us</a></li>
+        </ul>
+    </nav>
+    <section id="home">
+        <h1 class="h-primary">Welcome to MyOnlineMeal</h1>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo maxime nihil eveniet voluptatibus adipisci
+            reiciendis qui, eligendi pariatur </p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid, adipisci?</p>
+        <!-- <button class="btn">Order Now</button> -->
+        <form th:action="@{/login}" method="get">
+            <input type="submit" value="Order Now" class="btn">
+        </form>
+    </section>
+    <section id="services-container">
+        <h1 class="h-primary center">Our Servises</h1>
+        <div class="servises">
+            <div class="box">
+                <img src="https://img.lovepik.com/element/45007/2403.png_300.png" alt="">
+                <h2 class="h-secondary center">Food Ordering</h2>
+                <p>Lorem ipsum,reiciendis placeat modi necessitatibus similique voluptates quidem? Doloribus debitis
+                    reiciendis dolorem vel minima mollitia dolorum aliquam!</p>
+            </div>
+            <div class="box">
+                <img src="https://img.lovepik.com/element/45007/2408.png_300.png" alt="">
+                <h2 class="h-secondary center">Food Delevaring</h2>
+                <p>Lorem ipsum, reiciendis placeat modi necessitatibus similique voluptates quidem? Doloribus debitis
+                    reiciendis dolorem vel minima mollitia dolorum aliquam!</p>
+            </div>
+            <div class="box">
+                <img src="https://img.lovepik.com/element/45007/2411.png_300.png" alt="">
+                <h2 class="h-secondary center">Food </h2>
+                <p>Lorem ipsum, reiciendis placeat modi necessitatibus similique voluptates quidem? Doloribus debitis
+                    reiciendis dolorem vel minima mollitia dolorum aliquam!</p>
+            </div>
+        </div>
+    </section>
+    <section id="client-section">
+        <h1 class="h-primary center">Our Clients</h1>
+        <div class="clients">
+            <div class="client-item">
+                <img src="https://cdn.pixabay.com/photo/2016/08/09/17/52/instagram-1581266_640.jpg" alt="">
+                <img src="https://cdn.pixabay.com/photo/2017/12/06/04/56/facebook-3000954_640.png" alt="">
+                <img src="https://cdn.pixabay.com/photo/2016/11/22/06/47/twitter-1848505_640.png" alt="">
+                <!-- <img  id="s" src="https://cdn.pixabay.com/photo/2018/05/08/21/28/apple-3384010_640.png" alt=""> -->
+                <img src="https://cdn.pixabay.com/photo/2016/10/23/06/04/google-1762248_640.png" alt="">
+                <img src="https://cdn.pixabay.com/photo/2014/04/02/10/58/sign-305112_640.png" alt="">
+            </div>
+        </div>
+    </section>
+    <section id="contact">
+        <h1 class="h-primary center">Contact Us</h1>
+        <div class="contact-box">
+            <form action="">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="myname" id="name" placeholder="Enter your name:">
+                </div>
+                <div class="form-group">
+                    <label for="name">Email:</label>
+                    <input type="email" name="myname" id="email" placeholder="Enter your email:">
+                </div>
+                <div class="form-group">
+                    <label for="name">Phone No:</label>
+                    <input type="phone" name="myname" id="email" placeholder="Enter your phone number:">
+                </div>
+                <div class="form-group">
+                    <label for="inf">Massege</label>
+                    <textarea name="myText" id="inf" cols="30" rows="10"></textarea>
+                </div>
+            </form>
+        </div>
+    </section>
+    <footer>
+        <div class="center">
+            Copyright &copy; www.MyOnlineMeal.com. All rights reserved
+        </div>
+    </footer>
+</body>
+
+</html>

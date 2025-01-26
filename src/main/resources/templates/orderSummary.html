@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Summary</title>
+    <style>
+     body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding-top: 60px; /* Add space for the fixed navbar */
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+.total-amount {
+    text-align: center;
+    font-size: 1.5em;
+    color: #444;
+    margin: 20px 0;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+button {
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:first-child {
+    background-color: #28a745;
+    color: white;
+}
+
+button[type="submit"]:first-child:hover {
+    background-color: #218838;
+}
+
+button[type="submit"]:last-child {
+    background-color: #dc3545;
+    color: white;
+}
+
+button[type="submit"]:last-child:hover {
+    background-color: #c82333;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 60px; /* Set navbar height */
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+.navbar .menu {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar .menu a:hover {
+    text-decoration: underline;
+}
+
+.navbar .actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.profile-icon, .logout-btn {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.profile-icon {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+        
+    </style>
+</head>
+<body>
+<div class="navbar">
+        <div class="logo">FoodExpress</div>
+        <div class="menu">
+            <a th:href="@{/UserUI}">Home</a>
+            <a th:href="@{/}">Service</a>
+            <a th:href="@{/}">About</a>
+            <a th:href="@{/}">Contact Us</a>
+        </div>
+        <div class="actions">
+            <form th:action="@{/logout}" method="get" style="margin: 0;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+           
+        </div>
+    </div>
+    <div>
+    <h1>Order Summary</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="dish, iter : ${dishes}">
+                <td th:text="${iter.index + 1}"></td>
+                <td th:text="${dish.name}"></td>
+                <td th:text="${quantities[iter.index]}"></td>
+                <td th:text="${dish.price}"></td>
+                <td th:text="${dish.price * quantities[iter.index]}"></td>
+                <td>
+                    <form th:action="@{/remove-item}" method="post">
+                        <input type="hidden" name="dishId" th:value="${dish.id}"/>
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="total-amount">
+        Total Amount: ₹<span th:text="${totalAmount}"></span>
+    </div>
+
+    
+        <button  type="submit" onsubmit="return showAlert()"  style="display: block; margin: 20px auto; padding: 15px 30px; font-size: 16px; background-color: red; color: white; border: none; border-radius: 5px; text-align: center; cursor: pointer;"  >PAY ₹<span th:text="${totalAmount}"></span></button>
+    
+
+    <form th:action="@{/cancel-order}" method="post">
+        <button type="submit">CANCEL ORDER</button>
+    </form>
+    </div>
+</body>
+<script>
+    function showAlert() {
+        var totalAmount = document.querySelector('span').innerText; // Get the total amount
+        alert("Payment of ₹" + totalAmount + " is being processed.");
+        return true; // Allow the form to submit after the alert
+    }
+</script>
+</html>
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .total-amount {
+            text-align: center;
+            font-size: 1.5em;
+            color: #444;
+            margin: 20px 0;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:first-child {
+            background-color: #28a745;
+            color: white;
+        }
+        button[type="submit"]:first-child:hover {
+            background-color: #218838;
+        }
+        button[type="submit"]:last-child {
+            background-color: #dc3545;
+            color: white;
+        }
+        button[type="submit"]:last-child:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Summary</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="dish, iter : ${dishes}">
+                <td th:text="${iter.index + 1}"></td>
+                <td th:text="${dish.name}"></td>
+                <td th:text="${quantities[iter.index]}"></td>
+                <td th:text="${dish.price}"></td>
+                <td th:text="${dish.price * quantities[iter.index]}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="total-amount">
+        Total Amount: ₹<span th:text="${totalAmount}"></span>
+    </div>
+
+    <form th:action="@{/pay}" method="post">
+        <button type="submit">PAY ₹<span th:text="${totalAmount}"></span></button>
+    </form>
+
+    <form th:action="@{/cancel-order}" method="post">
+        <button type="submit">CANCEL ORDER</button>
+    </form>
+</body>
+</html>
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

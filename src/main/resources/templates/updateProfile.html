@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .navbar .menu a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar .actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .profile-icon, .logout-btn {
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .profile-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group button {
+            background-color: #ffcc00;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .form-group button:hover {
+            background-color: #e6b800;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-footer a {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">FoodExpress</div>
+        <div class="menu">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/}">Service</a>
+            <a th:href="@{/}">About</a>
+            <a th:href="@{/}">Contact Us</a>
+        </div>
+        <div class="actions">
+            <form th:action="@{/logout}" method="post" style="margin: 0;">
+                <button type="submit" class="logout-btn" style="color: black; background-color: rgb(255, 255, 50); padding: 10px 20px; border-radius: 4px; cursor: pointer;">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>Update Your Profile</h2>
+
+        <form th:action="@{/update-profileIntoDatabase}" method="post">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" th:value="${user.name}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Contact Number</label>
+                <input type="text" id="contact" name="contact" th:value="${user.contact}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" th:value="${user.address}" required />
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Save Changes</button>
+            </div>
+        </form>
+					
+	        <div class="form-footer">
+	            <a th:href="@{/backprofile}">Back to Profile</a>
+	        </div>
+	   
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

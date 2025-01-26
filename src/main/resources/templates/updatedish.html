@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Dish</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+        }
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            width: 60%;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form input, form select, form button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <nav id="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: #343a40; color: white;">
+        <!-- Logo -->
+        <div id="logo" style="flex: 1;">
+            <img src="https://img.lovepik.com/element/45007/2413.png_300.png" alt="MyonlineMail.com" style="height: 50px; width: auto;">
+        </div>
+        
+        <!-- Navigation Links -->
+        <ul style="display: flex; list-style: none; margin: 0; padding: 0; flex: 2; justify-content: center;">
+            <li class="items" style="margin: 0 15px;">
+                <a th:href="@{/home}" style="color: white; text-decoration: none; font-size: 16px;">Home</a>
+            </li>
+            <li class="items" style="margin: 0 15px;">
+                <a th:href="@{/}" style="color: white; text-decoration: none; font-size: 16px;">Service</a>
+            </li>
+            <li class="items" style="margin: 0 15px;">
+                <a th:href="@{/}" style="color: white; text-decoration: none; font-size: 16px;">About</a>
+            </li>
+            <li class="items" style="margin: 0 15px;">
+                <a th:href="@{/}" style="color: white; text-decoration: none; font-size: 16px;">Contact Us</a>
+            </li>
+        </ul>
+        
+        <!-- Logout Button -->
+        <div id="logout" style="flex: 1; text-align: right;">
+            <a th:href="@{/logout}" style="color: white; text-decoration: none; font-size: 16px; background-color: #007bff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Logout</a>
+        </div>
+    </nav>
+</div>
+
+    <h1>Update Dish</h1>
+    <form th:action="@{/update}" method="post">
+        <input type="hidden" th:value="${dish.id}" name="id">
+        <input type="text" name="name" th:value="${dish.name}" placeholder="Dish Name" required>
+        <input type="text" name="description" th:value="${dish.description}" placeholder="Description" required>
+        <input type="number" name="price" th:value="${dish.price}" placeholder="Price" step="0.01" required>
+        <select name="available" required>
+            <option th:value="true" th:selected="${dish.available}">Available</option>
+            <option th:value="false" th:selected="${!dish.available}">Not Available</option>
+        </select>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
