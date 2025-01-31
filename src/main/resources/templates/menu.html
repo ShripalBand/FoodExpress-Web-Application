@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -24,7 +23,7 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        form input, form select, form button {
+        form input, form button {
             display: block;
             width: 100%;
             margin: 10px 0;
@@ -64,6 +63,10 @@
         table tbody tr:nth-child(even) {
             background-color: #ffffff;
         }
+        table img {
+            max-height: 50px;
+            width: auto;
+        }
         table button {
             padding: 5px 10px;
             font-size: 14px;
@@ -92,75 +95,90 @@
         <div id="logo" style="flex: 1;">
             <img src="https://img.lovepik.com/element/45007/2413.png_300.png" alt="MyonlineMail.com" style="height: 50px; width: auto;">
         </div>
-        
+
         <!-- Navigation Links -->
         <ul style="display: flex; list-style: none; margin: 0; padding: 0; flex: 2; justify-content: center;">
+
+           
             <li class="items" style="margin: 0 15px;">
-                <a th:href="@{/home}" style="color: white; text-decoration: none; font-size: 16px;">Home</a>
+               <div id="logout" style="flex: 1; text-align: right;">
+    				<a th:href="@{/res}" style="color: white; text-decoration: none; font-size: 16px; background-color: #007bff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Add restaurant</a>
+				</div>
             </li>
             <li class="items" style="margin: 0 15px;">
-                <a th:href="@{/}" style="color: white; text-decoration: none; font-size: 16px;">Service</a>
-            </li>
-            <li class="items" style="margin: 0 15px;">
-                <a th:href="@{/}" style="color: white; text-decoration: none; font-size: 16px;">About</a>
-            </li>
-            <li class="items" style="margin: 0 15px;">
-                <a th:href="@{/}" style="color: white; text-decoration: none; font-size: 16px;">Contact Us</a>
+                <div id="logout" style="flex: 1; text-align: left;">
+    				<a th:href="@{/report}" style="color: white; text-decoration: none; font-size: 16px; background-color: #007bff; padding: 10px 10px; border-radius: 4px; cursor: pointer;">Report</a>
+				</div>
             </li>
         </ul>
-        
+
         <!-- Logout Button -->
         <div id="logout" style="flex: 1; text-align: right;">
-            <a th:href="@{/logout}" style="color: white; text-decoration: none; font-size: 16px; background-color:  #007bff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Logout</a>
+            <a th:href="@{/home}" style="color: white; text-decoration: none; font-size: 16px; background-color:  #007bff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Logout</a>
         </div>
     </nav>
 </div>
 
 
-    <h1>Manage Menu</h1>
-     <div id="logout" style="flex: 1; text-align: right;">
-            <a th:href="@{/res}" style="color: white; text-decoration: none; font-size: 16px; background-color: #007bff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Add restaurant</a>
-      </div>
-    <form th:action="@{/add}" method="post">
-        <input type="text" name="name" placeholder="Dish Name" required>
-        <input type="text" name="description" placeholder="Description" required>
-        <input type="number" name="price" placeholder="Price" step="0.01" required>
-        <select name="available" required>
-            <option value="true">Available</option>
-            <option value="false">Not Available</option>
-        </select>
-        <button type="submit">Add Dish</button>
-    </form>
+<h1>Manage Menu</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Availability</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="dish : ${dishes}">
-                <td th:text="${dish.name}"></td>
-                <td th:text="${dish.description}"></td>
-                <td th:text="${dish.price}"></td>
-                <td th:text="${dish.available ? 'Available' : 'Not Available'}"></td>
-                <td>
-                    <form th:action="@{/delete/{id}(id=${dish.id})}" method="post" style="display:inline;">
-                        <button class="delete" type="submit">Delete</button>
-                    </form>
-                    <form th:action="@{/update/{id}(id=${dish.id})}" method="get" style="display:inline;">
-                        <button class="update" type="submit">Update</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+
+
+<form th:action="@{/add}" method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Dish Name" required>
+    <input type="text" name="description" placeholder="Description" required>
+    <input type="number" name="price" placeholder="Price" step="0.01" required>
+    <input type="file" name="logo" id="logo" required>
+    <button type="submit">Add Dish</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Logo</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="dish : ${dishes}">
+            <td><img th:src="${dish.logoPath}" alt="Dish Logo"></td>
+            <td th:text="${dish.name}"></td>
+            <td th:text="${dish.description}"></td>
+            <td th:text="${dish.price}"></td>
+            <td>
+                <form th:action="@{/delete/{id}(id=${dish.id})}" method="post" style="display:inline;">
+                    <button class="delete" type="submit">Delete</button>
+                </form>
+                <form th:action="@{/update/{id}(id=${dish.id})}" method="get" style="display:inline;">
+                    <button class="update" type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

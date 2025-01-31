@@ -75,31 +75,28 @@
     </nav>
 </div>
 
-    <h1>Update Dish</h1>
-    <form th:action="@{/update}" method="post">
-        <input type="hidden" th:value="${dish.id}" name="id">
-        <input type="text" name="name" th:value="${dish.name}" placeholder="Dish Name" required>
-        <input type="text" name="description" th:value="${dish.description}" placeholder="Description" required>
-        <input type="number" name="price" th:value="${dish.price}" placeholder="Price" step="0.01" required>
-        <select name="available" required>
-            <option th:value="true" th:selected="${dish.available}">Available</option>
-            <option th:value="false" th:selected="${!dish.available}">Not Available</option>
-        </select>
-        <button type="submit">Update</button>
-    </form>
+<h1>Update Dish</h1>
+<form th:action="@{/update}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:value="${dish.id}" name="id">
+    <input type="text" name="name" th:value="${dish.name}" placeholder="Dish Name" required>
+    <input type="text" name="description" th:value="${dish.description}" placeholder="Description" required>
+    <input type="number" name="price" th:value="${dish.price}" placeholder="Price" step="0.01" required>
+    
+    <!-- Display current logo -->
+    <div>
+        <label>Current Logo:</label>
+        <img th:src="${dish.logoPath}" alt="Dish Logo" style="width: 100px; height: auto;">
+    </div>
+
+    <!-- Upload new logo -->
+    <label for="logo">Update Logo:</label>
+    <input type="file" name="logo" id="logo" accept="image/*">
+
+    <button type="submit">Update</button>
+</form>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

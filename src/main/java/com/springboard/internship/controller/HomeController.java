@@ -24,14 +24,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springboard.internship.dao.DishRepository;
+import com.springboard.internship.dao.FeedbackRepository;
 import com.springboard.internship.dao.RestaurantRepository;
 import com.springboard.internship.dao.UserRepository;
 //import com.springboard.internship.entities.CustomerOrder;
 import com.springboard.internship.entities.Dish;
+import com.springboard.internship.entities.Feedback;
 //import com.springboard.internship.entities.OrderItem;
 import com.springboard.internship.entities.Restaurant;
 import com.springboard.internship.entities.User;
 import com.springboard.internship.service.DishService;
+import com.springboard.internship.service.OrderService;
+import com.springboard.internship.service.ReportService;
 //import com.springboard.internship.service.OrderService;
 //import com.springboard.internship.service.OrderService;
 import com.springboard.internship.service.RestaurantService;
@@ -104,7 +108,7 @@ public class HomeController {
 			            
 			            model.addAttribute("restaurants", restaurants);
 			            session.setAttribute("loggedInUser", user1); // Store user in session
-			           // return "redirect:/dashboard";
+			            //return "redirect:/userui";
 			            return "userui";
 			        
 					//return "UserUI";
@@ -144,6 +148,20 @@ public class HomeController {
 	            return "redirect:/login";
 	        }
 	    }
+	    @RequestMapping("/backprofile")
+	    public String back(Model model) {
+	    	User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+            if (loggedInUser == null) {
+                return "redirect:/login";
+            }
+
+			 session.setAttribute("loggedInUser", loggedInUser);
+	         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+	         model.addAttribute("restaurants", restaurants);
+	            
+	    	return "userui";
+	    }
 	  
 	  
 	  
@@ -176,16 +194,8 @@ public class HomeController {
 	    }
 	    
 	    
-//	    @RequestMapping("/backprofile")
-//		public String backIntoProfile() {
-//			
-//			return "UserUI";
-//		}
-		
 
-
-	
-	//*****************************restaurant menu model ********************************
+	//***************************** menu model ********************************
 //	 @Autowired
 //	    private DishService dishService;
 
@@ -197,12 +207,31 @@ public class HomeController {
 	        return "menu";
 	    }
 
+//	    @PostMapping("/add")
+//	    public String addDish(@ModelAttribute("dish")Dish dish) {
+//	    	 dishService.saveDish(dish);
+//	        return "redirect:/menu";
+//	    }
+	    
 	    @PostMapping("/add")
-	    public String addDish(@ModelAttribute("dish")Dish dish) {
-//	        dishService.saveDish(dish);
-	    	 dishService.saveDish(dish);
-	        return "redirect:/menu";
-	    }
+	    public String addDish(@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("price") double price,
+                @RequestParam("logo") MultipartFile logo) throws IOException {
+				String logoPath = restaurantService.saveLogo(logo);
+//	    	String logoPath = dishService.saveLogo(logo);
+				Dish dish = new Dish();
+				dish.setName(name);
+				dish.setLogoPath(logoPath);
+				dish.setPrice(price);
+				dish.setDescription(description);
+				dishRepository.save(dish);
+				return "redirect:/menu";
+}
+	    
+	    
+	    
+	    
+	    
+	    
 
 	    @PostMapping("/delete/{id}")
 	    public String deleteDish(@PathVariable Long id) {
@@ -216,9 +245,18 @@ public class HomeController {
 	        return "updatedish";
 	    }
 
+//	    @PostMapping("/update")
+//	    public String updateDish(Dish dish) {
+//	        dishService.saveDish(dish);
+//	        return "redirect:/menu";
+//	    }
 	    @PostMapping("/update")
-	    public String updateDish(Dish dish) {
-	        dishService.saveDish(dish);
+	    public String updateDish(@ModelAttribute Dish dish, @RequestParam("logo") MultipartFile logoFile) throws IOException {
+	        if (!logoFile.isEmpty()) {
+	            String logoPath = restaurantService.saveLogo(logoFile); // Implement this method to save the file
+	            dish.setLogoPath(logoPath);
+	        }
+	        dishRepository.save(dish); // Save the updated dish
 	        return "redirect:/menu";
 	    }
 	    
@@ -293,11 +331,9 @@ public class HomeController {
 	            // Add restaurant details to session
 	            session.setAttribute("restaurant", restaurant);
 	            // Fetch menu items for the restaurant
-	           // List<Dish> menuItems = restaurantService.getMenuByRestaurantId(id);
-	          //  List<Dish> menuItems = dishRepository.findAll();
+	          
 	            List<Dish> menuItems = dishService.getAllDishes();
-	            // Add to the model
-	           // model.addAttribute("restaurant", restaurant);
+	           
 	            model.addAttribute("menuItems", menuItems);
 
 	            return "orderPage"; // Thymeleaf template name
@@ -310,9 +346,7 @@ public class HomeController {
 	        @Autowired
 	        private DishRepository dishRepository;
 	        
-	        
-//	        List<Dish> dishes = new ArrayList<>();
-//	        private Map<Long, Integer> quantities = new HashMap<>();
+	       
 	        @PostMapping("/calculate-order")
 	        public String calculateOrder(
 	                @RequestParam(value = "selectedDishes", required = false) List<Long> selectedDishes,
@@ -336,110 +370,116 @@ public class HomeController {
 
 	            return "orderSummary";
 	        }
-
+     
 	        
-	        
-//	     // Method to remove an item from the order
-//	        public void removeItemFromOrder(Long dishId) {
-//	            dishes.removeIf(dish -> dish.getId().equals(dishId));
-//	            quantities.remove(dishId);
-//	        }
-//
-//	        // Method to calculate the total amount of the order
-//	        public double calculateTotalAmount() {
-//	            double total = 0.0;
-//	            for (Dish dish : dishes) {
-//	                int quantity = quantities.getOrDefault(dish.getId(), 0);
-//	                total += dish.getPrice() * quantity;
-//	            }
-//	            return total;
-//	        }
-//	        
-//	        
-//	        
-//	        @PostMapping("/remove-item")
-//	        public String removeItem(@RequestParam("dishId") Long dishId, Model model) {
-//	            // Remove the item from the order
-//	            removeItemFromOrder(dishId);
-//	            
-//	            // Update the total amount
-//	            double totalAmount = calculateTotalAmount();
-//	            
-//	            // Add the updated total amount and dishes to the model
-//	            model.addAttribute("dishes", dishes);
-//	           // model.addAttribute("quantities",getQuantities());
-//	            model.addAttribute("quantities", quantities != null ? quantities : new ArrayList<>());
-//	            model.addAttribute("totalAmount", totalAmount);
-//
-//	            // Return to the order summary page
-//	            return "orderSummary";
-//	        }
-	        
-	        
-
-//	        @PostMapping("/calculate-order")
-//	        public String calculateOrder(
-//	            @RequestParam("selectedDishes") List<Long> selectedDishes,
-//	            @RequestParam("quantity") List<Integer> quantities,
-//	            Model model) {
-//
-//	            double totalAmount = 0.0;
-//
-//	            // Fetch selected dishes and calculate total amount
-//	            List<Dish> dishes = dishRepository.findAllById(selectedDishes);
-//	            for (int i = 0; i < dishes.size(); i++) {
-//	                totalAmount += dishes.get(i).getPrice() * quantities.get(i);
-//	            }
-//
-//	            // Add data to model
-//	            model.addAttribute("dishes", dishes);
-//	            model.addAttribute("quantities", quantities);
-//	            model.addAttribute("totalAmount", totalAmount);
-//
-//	            return "orderSummary"; // Redirect to summary page
-//	        }
-
-	    
-	        
-	        @PostMapping("/cancel-order")
-	        public String cancelOrder(Model model) {
+	        @RequestMapping("/cancelorder")
+	        public String cancel(Model model) {
 	          //  model.addAttribute("message", "Your order has been cancelled.");
-	            return "orderPage"; // Redirect to cancellation page
+	        	  User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+		            if (loggedInUser == null) {
+		                return "redirect:/login";
+		            }
+	        	session.setAttribute("loggedInUser", loggedInUser);
+	            List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+	      
+	            
+	            model.addAttribute("restaurants", restaurants);
+	            return "userui"; // Redirect to cancellation page
+	        }
+	        
+	        
+	        @Autowired
+	        private OrderService  orderService;
+	        
+	        @PostMapping("/process")
+	        public String processOrder(@RequestParam String email, 
+	                                   @RequestParam String name, 
+	                                   @RequestParam Double totalAmount,
+	                                   @RequestParam String hotelName,
+	                                   RedirectAttributes redirectAttributes) {
+	            orderService.saveOrder(email, name, totalAmount, hotelName);
+	            redirectAttributes.addFlashAttribute("message", "Order placed successfully!");
+	            //return "redirect:/order-success";
+	            return "feedback";
+	        }
+	        
+	        
+	        
+       
+	        
+	        
+ //***********************************  feedback and review model ********************************
+
+	        @GetMapping("/review")
+	    	public String feedPage() {
+	    		
+	    		return "feedback";
+	    	}
+	        @Autowired
+	        FeedbackRepository feedbackRepository ;
+	        @PostMapping("/submitFeedback")
+	        public String submitFeedback(@ModelAttribute("feedback") Feedback feedback, HttpSession session,Model model) {
+	            User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+	            if (loggedInUser == null) {
+	                return "redirect:/login";
+	            }
+
+	            
+	            feedbackRepository.save(feedback);
+				
+				 session.setAttribute("loggedInUser", loggedInUser);
+		            List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+		      
+		            
+		            model.addAttribute("restaurants", restaurants);
+		            
+		            return "userui";          
+	            //return "redirect:/userui";
+	        }
+	        @RequestMapping("/submitFeedback")
+	        public String returnUI() {
+	        	return "userui";
+	        }
+	        
+	        
+	        
+	  
+	  //************************************ Report Management module **********************************
+	    
+	        @Autowired
+	    	private ReportService reportService;
+	        
+	        @RequestMapping("/report")
+	        public String reportPage() {
+	        	return "report";
 	        }
 	        
 	        
 	        
 	        
-//	        @Autowired
-//	        private OrderService orderService;
-//	        
-//	      
-//
-//	        @PostMapping("/pay")
-//	        public String payOrder( @RequestParam List<Long> dishIds, @RequestParam List<Integer> quantities, Model model) {
-//	        	 String email = (String) session.getAttribute("loggedInUser");
-//	        	// Calculate total amount and create order items
-//	            List<OrderItem> items = new ArrayList<>();
-//	            double totalAmount = 0.0;
-//	            for (int i = 0; i < dishIds.size(); i++) {
-//	                java.util.Optional<Dish> dish = dishService.getDishById(dishIds.get(i));
-//	                int quantity = quantities.get(i);
-//	                totalAmount += dish.getPrice() * quantity;
-//
-//	                OrderItem item = new OrderItem();
-//	                item.setDish(dish);
-//	                item.setQuantity(quantity);
-//	                items.add(item);
-//	            }
-//
-//	            // Place the order
-//	            Order order = orderService.placeOrder(email, items, totalAmount);
-//
-//	            // Redirect to order success page
-//	            model.addAttribute("orderId", order.getId());
-//	            model.addAttribute("totalAmount", totalAmount);
-//	            return "orderSuccess"; // Create an order success page
-//	        }
+	        @GetMapping("/menu1")
+	        @ResponseBody
+	        public List<Dish> getMenuItems(Model model) {
+	        	 List<Dish> list = dishRepository.findAll();
+	        	 model.addAttribute("menu", list);
+	            return reportService.getMenu();
+	        }
+
+	        @GetMapping("/customers")
+	        @ResponseBody
+	        public int getCustomerCount() {
+	            return reportService.getTotalCustomers();
+	        }
+
+	        @GetMapping("/orders")
+	        @ResponseBody
+	        public List<com.springboard.internship.entities.Order> getOrders() {
+	            return reportService.getAllOrders();
+	        }
+	        
+	     
 
 }
 

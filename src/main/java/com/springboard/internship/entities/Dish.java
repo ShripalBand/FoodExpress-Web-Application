@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="dish2")
+@Table(name="dish3")
 public class Dish {
 
     @Id
@@ -19,23 +19,23 @@ public class Dish {
     private String name;
     private String description;
     private double price;
-    private boolean available;
+
+    private String logoPath;
     
     
-//    @ManyToOne
-//    @JoinColumn(name = "restaurantList1", nullable = false)
-//    private Restaurant restaurant;
-    Dish(){
+
+    public Dish(){
     	
     }
-	public Dish(boolean available, Long id, String name, String description, double price) {
+	public Dish(boolean available, Long id, String name, String description, double price,String logoPath) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.available = available;
-	// this.restaurant =restaurant;
+		this.logoPath = logoPath;
+
+
 	}
 	public Long getId() {
 		return id;
@@ -61,24 +61,21 @@ public class Dish {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public boolean isAvailable() {
-		return available;
+	
+	
+	public String getLogoPath() {
+		return logoPath;
 	}
-	public void setAvailable(boolean available) {
-		this.available = available;
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
 	}
 	
-//	public Restaurant getRestaurant() {
-//		return restaurant;
-//	}
-//	public void setRestaurant(Restaurant restaurant) {
-//		this.restaurant = restaurant;
-//	}
+
 	
 	@Override
 	public String toString() {
 		return "Dish [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", available=" + available + "]";
+				+ ", logoPath=" + logoPath + "]";
 	}
     
     

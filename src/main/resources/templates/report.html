@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Report</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .section {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .content {
+            display: none;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Report Page</h2>
+
+    <div class="section" onclick="toggleSection('menuContent')">
+        <h3>View Menu</h3>
+        <div id="menuContent" class="content">
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Logo</th>
+                </tr>
+                <tr th:each="dish : ${menu}">
+                    <td th:text="${dish.id}"></td>
+                    <td th:text="${dish.name}"></td>
+                    <td th:text="${dish.description}"></td>
+                    <td th:text="${dish.price}"></td>
+                    <td><img th:src="${dish.logoPath}" alt="Dish Logo" width="50"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section" onclick="toggleSection('customerContent')">
+        <h3>Total Customers</h3>
+        <div id="customerContent" class="content">
+            <p id="customerCount"></p>
+        </div>
+    </div>
+
+    <div class="section" onclick="toggleSection('ordersContent')">
+        <h3>Orders</h3>
+        <div id="ordersContent" class="content">
+            <table border="1">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Total Amount</th>
+                    <th>Hotel Name</th>
+                </tr>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.orderId}"></td>
+                    <td th:text="${order.email}"></td>
+                    <td th:text="${order.name}"></td>
+                    <td th:text="${order.totalAmount}"></td>
+                    <td th:text="${order.hotelName}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            $("#" + id).slideToggle();
+        }
+
+        $(document).ready(function () {
+            $.get("/menu1", function (data) {
+                let menuTable = $("#menuContent table");
+                menuTable.find("tr:gt(0)").remove(); // Clear existing rows
+                $.each(data, function (i, dish) {
+                    menuTable.append(
+                        "<tr><td>" + dish.id + "</td><td>" + dish.name + "</td><td>" + dish.description + 
+                        "</td><td>" + dish.price + "</td><td><img src='" + dish.logoPath + "' width='50'></td></tr>"
+                    );
+                });
+            });
+
+            $.get("/customers", function (data) {
+                $("#customerCount").text("Total Customers: " + data);
+            });
+
+            $.get("/orders", function (data) {
+                let ordersTable = $("#ordersContent table");
+                ordersTable.find("tr:gt(0)").remove(); // Clear existing rows
+                $.each(data, function (i, order) {
+                    ordersTable.append(
+                        "<tr><td>" + order.orderId + "</td><td>" + order.email + "</td><td>" + order.name + 
+                        "</td><td>" + order.totalAmount + "</td><td>" + order.hotelName + "</td></tr>"
+                    );
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
