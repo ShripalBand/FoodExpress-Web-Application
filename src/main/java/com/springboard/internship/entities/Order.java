@@ -1,13 +1,24 @@
 package com.springboard.internship.entities;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders7")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,18 +29,36 @@ public class Order {
     private String name;
     private Double totalAmount;
     private String hotelName;
+    @ElementCollection
+    private List<String> items;
+    @Column(name = "menu_item")
+    private List<String> menuItems;
+    private LocalDate orderDate;
+    
+ 
 
     // Constructors
-    public Order() {}
+    public Order() {
+       // this.menuItems = new ArrayList<>(); // Ensure it's initialized
+    }
 
-    public Order(String orderId, String email, String name, Double totalAmount,String hotelName) {
+    public Order(String orderId, String email, String name, Double totalAmount,String hotelName,List<String> menuItems, LocalDate orderDate) {
         this.orderId = orderId;
         this.email = email;
         this.name = name;
         this.totalAmount = totalAmount;
         this.hotelName=hotelName;
+        this.menuItems = menuItems;
+        this.orderDate = orderDate;
+        
     }
 
+    
+    
+    
+   
+    
+    
 	public Long getId() {
 		return id;
 	}
@@ -78,10 +107,25 @@ public class Order {
 		this.hotelName =hotelName;
 	}
 	
+	 public List<String> getMenuItems() {
+	        return menuItems;
+	    }
+
+	    public void setMenuItems(List<String> menuItems) {
+	        this.menuItems = menuItems;
+	    }
+	    public LocalDate getOrderDate() {
+			return orderDate;
+		}
+
+		public void setOrderDate(LocalDate orderDate) {
+			this.orderDate = orderDate;
+		}
+	
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", orderId=" + orderId + ", email=" + email + ", name=" + name + ", totalAmount="
-				+ totalAmount + ",hotelName="+hotelName+"]";
+				+ totalAmount + ",hotelName="+hotelName+ ",menuItems="+menuItems+ ",orderDate="+orderDate+"]";
 	}
 
 	

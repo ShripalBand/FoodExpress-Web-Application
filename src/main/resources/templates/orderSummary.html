@@ -196,6 +196,13 @@ button[type="submit"]:last-child:hover {
 	    <input type="hidden" name="name" th:value="${session.loggedInUser.name}"/>
 	    <input type="hidden" name="totalAmount" th:value="${totalAmount}"/>
 	    <input type="hidden" name="hotelName" th:value="${session.restaurant.name}"/>
+	    
+	     <!-- Hidden inputs for selected menu items -->
+    <th:block th:each="dish : ${dishes}">
+        <input type="hidden" name="menuItems" th:value="${dish.name}" />
+    </th:block>
+	    
+	    <input type="hidden" name="orderDate" th:value="${T(java.time.LocalDate).now()}" />
 	  
         <button  type="submit" onclick="return showAlert()"  style="display: block; margin: 20px auto; padding: 15px 30px; font-size: 16px; background-color: red; color: white; border: none; border-radius: 5px; text-align: center; cursor: pointer;"  >PAY ₹<span th:text="${totalAmount}"></span></button>
      </form>

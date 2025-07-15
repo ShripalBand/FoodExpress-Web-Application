@@ -14,20 +14,33 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            background-image: url('https://plus.unsplash.com/premium_photo-1705056547423-de4ef0f85bf7?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZCUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D') ;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            height: 300px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.89;
         }
 
         .container {
             max-width: 400px;
+            height: 610px;
             margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
+            padding: 15px;
+            background-color: #f8f8f8;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
+            color: rgb(0, 0, 0);
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         label {
@@ -57,17 +70,18 @@
         }
 
         input[type="submit"] {
-            background-color: #4CAF50;
+            background-color: #f1610d;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            width: 350px;
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #ee601f;
         }
         
         
@@ -203,7 +217,7 @@
 
         .box {
             border: 4px solid rgb(133, 43, 43);
-            background-color: rgb(213, 225, 228);
+            background-color: rgb(61, 95, 104);
             border-radius: 15px;
             text-align: center;
             /* margin: 3px 3px; */
@@ -248,7 +262,7 @@
         }
 
         #contact{
-            height: 450px;
+            height: 50px;
             position: relative;
             /* border: 2px solid red; */
         }
@@ -266,6 +280,7 @@
             display: flex;
             justify-content: center; 
             align-items: center;
+            height: 50px;
         }
 
         .contact-box label{
@@ -315,23 +330,10 @@
 </head>
 
 <body>
-  <div >
-    <nav id="navbar">
-        <div id="logo">
-            <img src="https://img.lovepik.com/element/45007/2413.png_300.png" alt="MyonlineMail.com">
-        </div>
-        <ul>
-            <li class="items"><a th:href="@{/}">Home</a></li>
-            <li class="items"><a th:href="@{/}">Service</a></li>
-            <li class="items"><a th:href="@{/}">About</a></li>
-            <li class="items"><a th:href="@{/}">Contact Us</a></li>
-           
-        </ul>
-    </nav>
-</div>
+  
 
     <div class="container">
-        <h2>Signup</h2>
+        <h2>Sign Up</h2>
         <form th:action="@{/do_register}" method="post" onsubmit="return validateForm()">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -340,18 +342,20 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" placeholder="Enter email" required>
             <p id="wrongEmail" class="error-message"></p>
+            
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" placeholder="Enter contact"  required>
+          <p id="wrongContact" class="error-message"></p>
+
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" placeholder="Enter password" required>
             <p id="wrongPass" class="error-message"></p>
 
-           <label for="contact">Contact:</label>
-            <input type="text" id="contact" name="contact" placeholder="Enter contact"  required>
-          <p id="wrongContact" class="error-message"></p>
+           
          
 
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" placeholder="Enter your address" required>
+            
 
             <input type="submit" value="Signup">
         </form>

@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Restaurants</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #f4f4f4;
         }
 
         .navbar {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            background-color: #333;
+            background-color: rgb(204, 20, 20);
             color: white;
             padding: 10px 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
+        }
+
+        .navbar .logoimg img {
+            width: 60px;
+            border-radius: 20px;
+            height: 65px;
+            margin: 4px 30px;
         }
 
         .navbar .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ffcc00;
+            color: #ffffff;
         }
 
         .navbar .menu {
@@ -36,20 +38,20 @@
         .navbar .menu a {
             color: white;
             text-decoration: none;
-            font-size: 16px;
-        }
-
-        .navbar .menu a:hover {
-            text-decoration: underline;
+            font-size: 18px;
+            margin-left: 60px;
+            cursor: pointer;
         }
 
         .navbar .actions {
             display: flex;
             gap: 20px;
             align-items: center;
+            margin-left: auto;
         }
 
-        .profile-icon, .logout-btn {
+        .profile-icon,
+        .logout-btn {
             cursor: pointer;
             background-color: transparent;
             border: none;
@@ -57,67 +59,77 @@
             font-size: 16px;
         }
 
-        .profile-icon {
+        .profile-icon img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Search Section Below Navbar */
+        .search-container {
             display: flex;
-            align-items: center;
-            gap: 5px;
+            justify-content: center;
+            padding: 15px;
+            background-color: #f9f9f9;
         }
 
-        /* User Info Section */
-        .user-info {
-            margin-top: 80px;
-            margin-left: 20px;
-            margin-right: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
+        .search-form {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
             border-radius: 10px;
-            background-color: #fff;
-            display: none;  /* Initially hidden */
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .user-info h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .user-info p {
+        .search-form input {
+            padding: 10px;
             font-size: 16px;
-            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 300px;
         }
 
-        .user-info strong {
-            font-weight: bold;
+        .search-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: rgb(204, 20, 20);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
         }
 
-        /* Restaurant Section */
+        .search-form button:hover {
+            background-color: rgb(180, 18, 18);
+        }
+
+        /* Full-Screen Restaurant Display */
         .restaurant-container {
-             
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            padding: 20px 20px 20px;
-            width: 100%;
-            box-sizing: border-box;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
         }
 
         .restaurant-card {
-         
-            border: 1px solid #ccc;
             border-radius: 10px;
             padding: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: white;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #fff;
         }
 
         .restaurant-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .restaurant-logo {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             border-radius: 10px;
         }
@@ -127,98 +139,44 @@
         }
 
         .restaurant-name {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            color: #333;
         }
 
-        .restaurant-contact, .restaurant-address {
+        .restaurant-contact,
+        .restaurant-address {
             font-size: 14px;
             color: #555;
         }
-
-        /* Search Form */
-        .search-form {
-            margin: 20px;
-             margin-top: 40px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #fff;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .search-form input {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 40%;
-            box-sizing: border-box;
-        }
-
-        .search-form button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #ffcc00;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .search-form button:hover {
-            background-color: #e6b800;
-        }
-
-        /* No restaurants found message */
-        .no-restaurants {
-            text-align: center;
-            font-size: 18px;
-            color: #666;
-            padding: 20px;
-        }
-
     </style>
 </head>
+
 <body>
 
     <div class="navbar">
+        <div class="logoimg">
+            <img src='https://play-lh.googleusercontent.com/qAnSeBvgUFft3kF9WilP8b1CJrJpqAR3blnKDsbntKOBbSNhfN5eos0oBB0lJADri7AB'>
+        </div>
         <div class="logo">FoodExpress</div>
         <div class="menu">
-            <a th:href="@{/}">Home</a>
-            <a th:href="@{/}">Service</a>
-            <a th:href="@{/}">About</a>
-            <a th:href="@{/}">Contact Us</a>
+            <a th:href="@{/home}">Home</a>
+            <a th:href="@{/about}">About</a>
         </div>
         <div class="actions">
-            <form th:action="@{/home}" method="get" style="margin: 0;">
+            <form th:action="@{/home}" method="post" style="margin: 0;">
                 <button type="submit" class="logout-btn">Logout</button>
             </form>
             <button class="profile-icon" onclick="toggleUserInfo()">
-                <img src="/images/profileLogo.png" alt="Profile" width="24" height="24"> 
+                <img src="https://up.yimg.com/ib/th?id=OIP.rVDfmJwnrS6PtliBeJvB4wHaHa&pid=Api&rs=1&c=1&qlt=95&w=121&h=121"
+                    alt="Profile">
             </button>
         </div>
     </div>
 
-    <!-- Display User Information -->
-    <div class="user-info">
-        <h2>User Information</h2>
-        <p><strong>Name:</strong> <span th:text="${session.loggedInUser.name}"></span></p>
-        <p><strong>Email:</strong> <span th:text="${session.loggedInUser.email}"></span></p>
-        <p><strong>Contact:</strong> <span th:text="${session.loggedInUser.contact}"></span></p>
-        <p><strong>Address:</strong> <span th:text="${session.loggedInUser.address}"></span></p>
-        <!-- Update Profile Button -->
-        <button onclick="window.location.href='/update-profile'">Update Profile</button>
-        
-        <!-- Order History Button -->
-       <!--  <button onclick="window.location.href='/order-history'">Order History</button> -->
-    </div>
-
-    <!-- Restaurant Search and Display -->
-    <div class="search-form">
-        <form th:action="@{/restaurants}" method="get">
-            <input type="text" name="search" placeholder="Search by name" th:value="${param.search}" />
+    <!-- Search Bar Below Navbar -->
+    <div class="search-container">
+        <form class="search-form" th:action="@{/restaurants}" method="get">
+            <input type="text" name="search" placeholder="Search restaurant" th:value="${param.search}" />
             <button type="submit">Search</button>
         </form>
     </div>
@@ -237,8 +195,8 @@
         </div>
     </div>
 
-    <div th:if="${restaurants == null || restaurants.isEmpty()}" class="no-restaurants">
-        <p>No restaurants available to display.</p>
+    <div th:if="${restaurants == null || restaurants.isEmpty()}">
+        <p style="text-align: center;">No restaurants available to display.</p>
     </div>
 
     <script>
@@ -250,9 +208,6 @@
 
 </body>
 </html>
-
-
-
 
 
 

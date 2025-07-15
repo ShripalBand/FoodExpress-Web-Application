@@ -3,13 +3,18 @@ package com.springboard.internship.controller;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,23 +30,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springboard.internship.dao.DishRepository;
 import com.springboard.internship.dao.FeedbackRepository;
+import com.springboard.internship.dao.OrderRepository;
 import com.springboard.internship.dao.RestaurantRepository;
 import com.springboard.internship.dao.UserRepository;
 //import com.springboard.internship.entities.CustomerOrder;
 import com.springboard.internship.entities.Dish;
 import com.springboard.internship.entities.Feedback;
-//import com.springboard.internship.entities.OrderItem;
+
+import com.springboard.internship.entities.Order;
 import com.springboard.internship.entities.Restaurant;
 import com.springboard.internship.entities.User;
 import com.springboard.internship.service.DishService;
 import com.springboard.internship.service.OrderService;
-import com.springboard.internship.service.ReportService;
+
 //import com.springboard.internship.service.OrderService;
 //import com.springboard.internship.service.OrderService;
 import com.springboard.internship.service.RestaurantService;
 import com.springboard.internship.service.UserService;
 
-import jakarta.persistence.criteria.Order;
+//import jakarta.persistence.criteria.Order;
 import jakarta.servlet.http.HttpSession;
 
 //import ch.qos.logback.core.model.Model;
@@ -70,6 +77,11 @@ public class HomeController {
 		
 		return "SignUp";
 	}
+	@RequestMapping("/about")
+	public String about() {
+		
+		return "about";
+	}
 	
 	@Autowired
 	private UserRepository userrepo;
@@ -87,50 +99,79 @@ public class HomeController {
 	@Autowired
 	private UserRepository userRepository ;
 	
-	@PostMapping("/check_user")
-	public String loginUser(@ModelAttribute("user")User user,Model model,HttpSession session) {
-		String username = user.getEmail();
-		String password = user.getPassword();
-//		System.out.println(username);
-//		System.out.println(password);
-		
-		ArrayList<User>allUserList =(ArrayList<User>) userrepo.findAll();
-		
-			for(int i =  0 ; i<allUserList.size();i++) {
-				// if user try to login
-				if(allUserList.get(i).getEmail().equals(username)&&  allUserList.get(i).getRole().equals("USER") &&allUserList.get(i).getPassword().equals(password)){
-					//user ui
-					
-					 User user1 = userRepository.findByEmail(username);
-					 session.setAttribute("loggedInUser", user1);
-			            List<Restaurant> restaurants = restaurantService.getAllRestaurants();
-			      
-			            
-			            model.addAttribute("restaurants", restaurants);
-			            session.setAttribute("loggedInUser", user1); // Store user in session
-			            //return "redirect:/userui";
-			            return "userui";
-			        
-					//return "UserUI";
-					
-				}else if(allUserList.get(i).getEmail().equals(username)&&  allUserList.get(i).getRole().equals("ADMIN") &&allUserList.get(i).getPassword().equals(password)){
-					//admin ui
-					
-					 model.addAttribute("dishes", dishService.getAllDishes());
-				    	
-				        return "menu";
-					//return "AdminUI";
-				}	
-				
-			}//End for loop
-		
-			 // If no match is found, add an error message
-		    model.addAttribute("errorMessage", "Invalid username or password. Please try again.");
-		    return "Login"; // Return to the login page with an error message
-		
-		
-		//return "Login";
-	}
+	
+	 @PostMapping("/check_user")
+	    public String processLogin(@RequestParam String email,
+	                               @RequestParam String password, Model model) {
+        java.util.Optional<User> optionalUser = userRepository.findByEmailAndPassword(email, password);
+
+        if (optionalUser.isPresent()) {
+        	 String role = optionalUser.get().getRole(); // ✅ get the role
+            if (role.equalsIgnoreCase("USER")) {
+				 User user1 = userRepository.findByEmail(email);
+				// session.setAttribute("loggedInUser", user1);
+		            List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+		            model.addAttribute("restaurants", restaurants);
+		            session.setAttribute("loggedInUser", user1); // Store user in session
+		            return "UserUI";
+            } else  {//if admin try to login
+            	 model.addAttribute("dishes", dishService.getAllDishes());			    				        
+            	 return "menu";
+            
+             } 
+        }
+        else {
+            model.addAttribute("errorMessage", "Invalid Username and password");
+            return "login";
+        }
+    }
+
+
+	
+//	@PostMapping("/check_user")
+//	public String loginUser(@ModelAttribute("user")User user,Model model,HttpSession session) {
+//		String username = user.getEmail();
+//		String password = user.getPassword();
+////		System.out.println(username);
+////		System.out.println(password);
+//		
+//		ArrayList<User>allUserList =(ArrayList<User>) userrepo.findAll();
+//		
+//			for(int i =  0 ; i<allUserList.size();i++) {
+//				// if user try to login
+//				if(allUserList.get(i).getEmail().equals(username)&&  allUserList.get(i).getRole().equals("USER") &&allUserList.get(i).getPassword().equals(password)){
+//					//user ui
+//					
+//					 User user1 = userRepository.findByEmail(username);
+//					// session.setAttribute("loggedInUser", user1);
+//			            List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+//			      
+//			            
+//			            model.addAttribute("restaurants", restaurants);
+//			            session.setAttribute("loggedInUser", user1); // Store user in session
+//			            //return "redirect:/userui";
+//			            return "userui";
+//			        
+//					//return "UserUI";
+//					
+//				}else if(allUserList.get(i).getEmail().equals(username)&&  allUserList.get(i).getRole().equals("ADMIN") &&allUserList.get(i).getPassword().equals(password)){
+//					//admin ui
+//					
+//					 model.addAttribute("dishes", dishService.getAllDishes());
+//				    	
+//				        return "menu";
+//					//return "AdminUI";
+//				}	
+//				
+//			}//End for loop
+//		
+//			 // If no match is found, add an error message
+//		    model.addAttribute("errorMessage", "Invalid username or password. Please try again.");
+//		    return "Login"; // Return to the login page with an error message
+//		
+//		
+//		//return "Login";
+//	}
 	
 	 
 
@@ -207,11 +248,6 @@ public class HomeController {
 	        return "menu";
 	    }
 
-//	    @PostMapping("/add")
-//	    public String addDish(@ModelAttribute("dish")Dish dish) {
-//	    	 dishService.saveDish(dish);
-//	        return "redirect:/menu";
-//	    }
 	    
 	    @PostMapping("/add")
 	    public String addDish(@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("price") double price,
@@ -278,13 +314,7 @@ public class HomeController {
 	    		return "AddRestaurant";
 	    	}
 	    	
-//	    	@RequestMapping("/display")
-//	        public String getRestaurants(Model model) {
-//	            List<Restaurant> restaurants = restaurantService.getAllRestaurants();
-//	            model.addAttribute("restaurants", restaurants);
-//	            return "UserUI";
-//	           
-//	        }
+
 	    	@RequestMapping("/restaurants")
 	    	 public String getRestaurants(@RequestParam(required = false) String search, Model model) {
 	            List<Restaurant> restaurants;
@@ -397,8 +427,11 @@ public class HomeController {
 	                                   @RequestParam String name, 
 	                                   @RequestParam Double totalAmount,
 	                                   @RequestParam String hotelName,
+	                                   @RequestParam List<String> menuItems,
+	                                   @RequestParam LocalDate orderDate,
 	                                   RedirectAttributes redirectAttributes) {
-	            orderService.saveOrder(email, name, totalAmount, hotelName);
+	        	System.out.println("Received Menu Items: " + menuItems); 
+	            orderService.saveOrder(email, name, totalAmount, hotelName,menuItems,orderDate);
 	            redirectAttributes.addFlashAttribute("message", "Order placed successfully!");
 	            //return "redirect:/order-success";
 	            return "feedback";
@@ -448,8 +481,70 @@ public class HomeController {
 	  
 	  //************************************ Report Management module **********************************
 	    
+//	        @Autowired
+//	    	private ReportService reportService;
+//	        
+//	        @RequestMapping("/report")
+//	        public String reportPage() {
+//	        	return "report";
+//	        }
+//	        
+//	        
+//	        
+//	        
+//	        @GetMapping("/menu1")
+//	        @ResponseBody
+//	        public List<Dish> getMenuItems(Model model) {
+//	        	 List<Dish> list = dishRepository.findAll();
+//	        	 model.addAttribute("menu", list);
+//	            return reportService.getMenu();
+//	        }
+//
+//	        @GetMapping("/customers")
+//	        @ResponseBody
+//	        public int getCustomerCount() {
+//	            return reportService.getTotalCustomers();
+//	        }
+//
+//	        @GetMapping("/orders")
+//	        @ResponseBody
+//	        public List<com.springboard.internship.entities.Order> getOrders() {
+//	            return reportService.getAllOrders();
+//	        }
+//	        
+	        
+	        
+//	        //***************************************************
+//	        @Autowired
+//	        private ReportService reportService;
+//	        
+//	        @Autowired
+//	        private OrderRepository orderRepository;
+//
+//	        @GetMapping("/report")
+//	        public String showReportPage() {
+//	            return "report";
+//	        }
+//
+//	        @GetMapping("/generateReport")
+//	        public String getReport(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+//	                                @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+//	                                Model model) {
+//	        	
+//	            Report report = reportService.generateReport(startDate, endDate);
+//	            if (report == null) {
+//	                report = new Report(); // Prevent null reference
+//	            }
+//	            List<com.springboard.internship.entities.Order> orders = orderRepository.findByOrderDateBetween(startDate, endDate);
+//	            model.addAttribute("report", report);
+//	            model.addAttribute("totalOrders", report.getTotalOrders());
+//	            model.addAttribute("orders", orders);
+//	            return "report";
+//	        }
+	        
+
 	        @Autowired
-	    	private ReportService reportService;
+	        private OrderRepository orderRepository;
 	        
 	        @RequestMapping("/report")
 	        public String reportPage() {
@@ -457,31 +552,43 @@ public class HomeController {
 	        }
 	        
 	        
-	        
-	        
-	        @GetMapping("/menu1")
-	        @ResponseBody
-	        public List<Dish> getMenuItems(Model model) {
-	        	 List<Dish> list = dishRepository.findAll();
-	        	 model.addAttribute("menu", list);
-	            return reportService.getMenu();
-	        }
+	        @GetMapping("/generateReport")
+	        public String generateReport(@RequestParam("startDate") String startDate,
+	                                     @RequestParam("endDate") String endDate,
+	                                     Model model) {
 
-	        @GetMapping("/customers")
-	        @ResponseBody
-	        public int getCustomerCount() {
-	            return reportService.getTotalCustomers();
-	        }
+	            LocalDate start = LocalDate.parse(startDate);
+	            LocalDate end = LocalDate.parse(endDate);
+	            
+	            List<Order> orders = orderService.getOrdersBetweenDates(start, end);
+	            
+	            model.addAttribute("orders", orders);
+	            model.addAttribute("totalOrders", orders.size());
 
-	        @GetMapping("/orders")
-	        @ResponseBody
-	        public List<com.springboard.internship.entities.Order> getOrders() {
-	            return reportService.getAllOrders();
+	            // Calculate unique users based on email
+	            long totalUsers = orders.stream().map(Order::getEmail).distinct().count();
+	            model.addAttribute("totalUsers", totalUsers);
+
+	            return "report"; // Ensure your HTML file is named `report.html`
 	        }
 	        
 	     
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

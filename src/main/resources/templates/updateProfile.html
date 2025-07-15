@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title>Update Profile</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #f9f9f9;
+            background-image: url('https://image.slidesdocs.com/responsive-images/background/splash-watercolor-abstract-company-profile-business-powerpoint-background_74ae8d9138__960_540.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            height: 300px;
+            width: 100%;
+            z-index: -1;
+            opacity: 0.89;
         }
 
         .navbar {
+            height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #333;
+            background-color: #db370e;
             color: white;
             padding: 10px 20px;
         }
@@ -21,7 +32,7 @@
         .navbar .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #ffcc00;
+            color: #ffffff;
         }
 
         .navbar .menu {
@@ -33,10 +44,11 @@
             color: white;
             text-decoration: none;
             font-size: 16px;
+            cursor: pointer;
         }
 
         .navbar .menu a:hover {
-            text-decoration: underline;
+            text-decoration: none;
         }
 
         .navbar .actions {
@@ -60,17 +72,21 @@
         }
 
         .form-container {
-            max-width: 600px;
+            max-width: 400px;
+            height: 450px;
             margin: 40px auto;
             padding: 20px;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(255, 0, 0, 0.1);
         }
 
         .form-container h2 {
             font-size: 24px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            margin-left: 110px;
+        
+            
         }
 
         .form-group {
@@ -81,29 +97,32 @@
             font-size: 16px;
             font-weight: bold;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
         }
 
         .form-group input {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             font-size: 16px;
             border-radius: 4px;
-            border: 1px solid #ccc;
+            border: 1px solid #dfa3a3;
         }
 
         .form-group button {
-            background-color: #ffcc00;
-            padding: 10px 20px;
-            border: none;
+            margin-top: 15px;
+            background-color: #db370e;
+            color: #ffffff;
+            padding: 15px 20px;
+            border: 0px solid;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 15px;
             font-size: 16px;
-            width: 100%;
+            width: 90%;
+           
         }
 
         .form-group button:hover {
-            background-color: #e6b800;
+            background-color:  #db370e;
         }
 
         .form-footer {
@@ -112,13 +131,15 @@
         }
 
         .form-footer a {
-            color: #333;
+            color: #000000;
             text-decoration: none;
             font-size: 16px;
         }
 
         .form-footer a:hover {
-            text-decoration: underline;
+            text-decoration: none;
+            cursor: pointer;
+            color: #0eabdb;
         }
     </style>
 </head>
@@ -127,20 +148,18 @@
     <div class="navbar">
         <div class="logo">FoodExpress</div>
         <div class="menu">
-            <a th:href="@{/}">Home</a>
-            <a th:href="@{/}">Service</a>
-            <a th:href="@{/}">About</a>
-            <a th:href="@{/}">Contact Us</a>
+            <a th:href="@{/home}">Home</a>
+            <a th:href="@{/about}">About</a>
         </div>
         <div class="actions">
-            <form th:action="@{/logout}" method="post" style="margin: 0;">
-                <button type="submit" class="logout-btn" style="color: black; background-color: rgb(255, 255, 50); padding: 10px 20px; border-radius: 4px; cursor: pointer;">Logout</button>
+            <form th:action="@{/check_user}" method="post" style="margin: 0;">
+                <button type="submit" class="logout-btn" style="color: rgb(218, 24, 24); background-color: rgb(255, 255, 255); padding: 10px 20px; border-radius: 8px; cursor: pointer;">Back</button>
             </form>
         </div>
     </div>
 
     <div class="form-container">
-        <h2>Update Your Profile</h2>
+        <h2>Update Profile</h2>
 
         <form th:action="@{/update-profileIntoDatabase}" method="post">
             <div class="form-group">
@@ -159,36 +178,16 @@
             </div>
 
             <div class="form-group">
-                 <a th:href="@{/backprofile}">Save Changes</a>
+                <button type="submit">Save Changes</button>
             </div>
         </form>
 					
-	        
+	        <div class="form-footer">
+	            <a th:href="@{/backprofile}">Back to Profile</a>
+	        </div>
 	   
     </div>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

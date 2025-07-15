@@ -1,108 +1,182 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Report</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Order Report</title>
+    <meta charset="UTF-8">
     <style>
-        .section {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            cursor: pointer;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            text-align: center;
         }
-        .content {
-            display: none;
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        form:hover {
+            transform: scale(1.02);
+        }
+
+        input[type="date"], button {
             padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        table:hover {
+            transform: scale(1.02);
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        td {
+            background: #fff;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 20px;
+        }
+
+        .info-box {
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .info-box:hover {
+            transform: scale(1.05);
+        }
+
+        .no-orders {
+            background: #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .no-orders:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
-    <h2>Report Page</h2>
+    <h2>Order Report</h2>
 
-    <div class="section" onclick="toggleSection('menuContent')">
-        <h3>View Menu</h3>
-        <div id="menuContent" class="content">
-            <table border="1">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Logo</th>
-                </tr>
-                <tr th:each="dish : ${menu}">
-                    <td th:text="${dish.id}"></td>
-                    <td th:text="${dish.name}"></td>
-                    <td th:text="${dish.description}"></td>
-                    <td th:text="${dish.price}"></td>
-                    <td><img th:src="${dish.logoPath}" alt="Dish Logo" width="50"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
+    <!-- Form to select start and end dates -->
+    <form th:action="@{/generateReport}" method="get">
+        <label>Start Date:</label>
+        <input type="date" name="startDate" required>
+        <label>End Date:</label>
+        <input type="date" name="endDate" required>
+        <button type="submit">Generate</button>
+    </form>
 
-    <div class="section" onclick="toggleSection('customerContent')">
-        <h3>Total Customers</h3>
-        <div id="customerContent" class="content">
-            <p id="customerCount"></p>
-        </div>
-    </div>
-
-    <div class="section" onclick="toggleSection('ordersContent')">
+    <!-- Display orders if available -->
+    <div th:if="${orders != null and not #lists.isEmpty(orders)}">
         <h3>Orders</h3>
-        <div id="ordersContent" class="content">
-            <table border="1">
+        <table>
+            <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Email</th>
                     <th>Name</th>
-                    <th>Total Amount</th>
+                    <th>Email</th>
+                    <th>Price</th>
+                    <th>Order ID</th>
                     <th>Hotel Name</th>
+                    <th>Order Date</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr th:each="order : ${orders}">
-                    <td th:text="${order.orderId}"></td>
-                    <td th:text="${order.email}"></td>
                     <td th:text="${order.name}"></td>
+                    <td th:text="${order.email}"></td>
                     <td th:text="${order.totalAmount}"></td>
+                    <td th:text="${order.orderId}"></td>
                     <td th:text="${order.hotelName}"></td>
+                    <td th:text="${order.orderDate}"></td>
                 </tr>
-            </table>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h3>Total Orders: <span th:text="${totalOrders}"></span></h3>
+        </div>
+
+        <div class="info-box">
+            <h3>Total Unique Users: <span th:text="${totalUsers}"></span></h3>
         </div>
     </div>
 
-    <script>
-        function toggleSection(id) {
-            $("#" + id).slideToggle();
-        }
-
-        $(document).ready(function () {
-            $.get("/menu1", function (data) {
-                let menuTable = $("#menuContent table");
-                menuTable.find("tr:gt(0)").remove(); // Clear existing rows
-                $.each(data, function (i, dish) {
-                    menuTable.append(
-                        "<tr><td>" + dish.id + "</td><td>" + dish.name + "</td><td>" + dish.description + 
-                        "</td><td>" + dish.price + "</td><td><img src='" + dish.logoPath + "' width='50'></td></tr>"
-                    );
-                });
-            });
-
-            $.get("/customers", function (data) {
-                $("#customerCount").text("Total Customers: " + data);
-            });
-
-            $.get("/orders", function (data) {
-                let ordersTable = $("#ordersContent table");
-                ordersTable.find("tr:gt(0)").remove(); // Clear existing rows
-                $.each(data, function (i, order) {
-                    ordersTable.append(
-                        "<tr><td>" + order.orderId + "</td><td>" + order.email + "</td><td>" + order.name + 
-                        "</td><td>" + order.totalAmount + "</td><td>" + order.hotelName + "</td></tr>"
-                    );
-                });
-            });
-        });
-    </script>
-
+    <!-- Message if no orders found -->
+    <div th:if="${orders == null or #lists.isEmpty(orders)}" class="no-orders">
+        <h3>No orders found for the selected date range.</h3>
+    </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

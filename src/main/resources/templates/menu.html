@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Restaurant Menu</title>
     <style>
@@ -7,43 +8,61 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
+            background-image: url('https://wallpapertag.com/wallpaper/full/4/d/7/317105-gorgerous-food-background-2990x1918-for-mobile-hd.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            height: 300px;
+            width: 100%;
+        }
+
+        .navbar .logo img{
+            border-radius: 15px;
+            cursor: pointer;
         }
         h1 {
+            margin-top: 10px;
             text-align: center;
             padding: 20px;
-            background-color: #343a40;
-            color: white;
+            background-color:   #ffffff;
+            color:   #db370e;
+        
+            
         }
         form {
             margin: 20px auto;
             padding: 20px;
-            width: 60%;
+            width: 30%;
+            height: 400px;
             background-color: #ffffff;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(214, 22, 22, 0.1);
         }
         form input, form button {
             display: block;
-            width: 100%;
-            margin: 10px 0;
+            width: 90%;
+            margin: 20px 0;
             padding: 10px;
             border: 1px solid #ced4da;
             border-radius: 4px;
             font-size: 16px;
         }
         form button {
-            background-color: #28a745;
+            margin-top: 10px;
+            background-color:  #db370e;
             color: white;
             border: none;
             cursor: pointer;
         }
         form button:hover {
-            background-color: #218838;
+            background-color: #db370e;
         }
         table {
             width: 90%;
-            margin: 20px auto;
+            margin: 40px auto;
             border-collapse: collapse;
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -54,7 +73,7 @@
             border: 1px solid #dee2e6;
         }
         table th {
-            background-color: #343a40;
+            background-color: #db370e;
             color: white;
         }
         table tbody tr:nth-child(odd) {
@@ -75,56 +94,55 @@
             cursor: pointer;
         }
         table .delete {
-            background-color: #dc3545;
+            background-color: #ff011a;
         }
         table .delete:hover {
-            background-color: #c82333;
+            background-color: #ff051e;
         }
         table .update {
-            background-color: #ffc107;
+            background-color:#189208;
         }
         table .update:hover {
-            background-color: #e0a800;
+            background-color: #189208;
+
         }
+    
     </style>
 </head>
 <body>
 <div>
-    <nav id="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: #343a40; color: white;">
+    <nav class="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color:  #db370e; color: white;">
         <!-- Logo -->
-        <div id="logo" style="flex: 1;">
-            <img src="https://img.lovepik.com/element/45007/2413.png_300.png" alt="MyonlineMail.com" style="height: 50px; width: auto;">
+        <div class="logo" style="flex: 1;margin-left: 80px;">
+            <img src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/39-Food-Delivery-Logos-That-Will-Leave-You-Hungry-For-More/food-express-by-gigih-rudya-designcrowd.png" alt="MyonlineMail.com" style="height: 50px; width: auto;">
         </div>
 
         <!-- Navigation Links -->
         <ul style="display: flex; list-style: none; margin: 0; padding: 0; flex: 2; justify-content: center;">
-
-           
             <li class="items" style="margin: 0 15px;">
-               <div id="logout" style="flex: 1; text-align: right;">
-    				<a th:href="@{/res}" style="color: white; text-decoration: none; font-size: 16px; background-color: #007bff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Add restaurant</a>
-				</div>
+                 <a th:href="@{/home}" style="color:  rgb(206, 42, 42); text-decoration: none; font-size: 16px; background-color:  #ffffff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Home</a>
             </li>
             <li class="items" style="margin: 0 15px;">
-                <div id="logout" style="flex: 1; text-align: left;">
-    				<a th:href="@{/report}" style="color: white; text-decoration: none; font-size: 16px; background-color: #007bff; padding: 10px 10px; border-radius: 4px; cursor: pointer;">Report</a>
-				</div>
+                <a th:href="@{/report}" style="color:  rgb(206, 42, 42); text-decoration: none; font-size: 16px; background-color:  #ffffff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Report</a>
             </li>
+            <li class="items" style="margin: 0 15px;">
+                 <a th:href="@{/res}" style="color:  rgb(206, 42, 42); text-decoration: none; font-size: 16px; background-color:  #ffffff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Add restaurant</a>
+            </li>        
         </ul>
+        
 
         <!-- Logout Button -->
         <div id="logout" style="flex: 1; text-align: right;">
-            <a th:href="@{/home}" style="color: white; text-decoration: none; font-size: 16px; background-color:  #007bff; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Logout</a>
+            <a th:href="@{/home}" style="color: rgb(206, 42, 42); text-decoration: none; font-size: 16px; background-color:  #fffefe; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Logout</a>
         </div>
     </nav>
 </div>
 
 
-<h1>Manage Menu</h1>
-
 
 
 <form th:action="@{/add}" method="post" enctype="multipart/form-data">
+    <h1>Manage Menu</h1>
     <input type="text" name="name" placeholder="Dish Name" required>
     <input type="text" name="description" placeholder="Description" required>
     <input type="number" name="price" placeholder="Price" step="0.01" required>
@@ -161,17 +179,6 @@
 </table>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

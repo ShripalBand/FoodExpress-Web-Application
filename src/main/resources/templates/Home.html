@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Best Online Food Delivery Service in India | MyOnlineMeal.com</title>
+    <title>Food Express</title>
     <link rel="stylesheet" media="screen and (max-width: 320px)" href="css/phone.css">
     <!-- <link rel="stylesheet" href="css/style.css"> -->
         <style>
@@ -15,7 +15,7 @@
         }
 
         #navbar #logo img {
-            border-radius: 30px;
+            border-radius: 20px;
         }
 
         /* Navigation Bar */
@@ -25,28 +25,33 @@
 
         /* Navihation Bar: logo and image */
         #logo {
-            margin: 10px 34px;
+            margin: 10px 44px;
 
         }
 
         #logo img {
-            height: 50px;
+            height: 65px;
+            width:70px ;
             margin: 3px 6px;
+           
         }
 
         #navbar {
             position: relative;
             top: 0px;
-            left: 0px;
+            left: 0px; 
+            
         }
 
         #navbar ul {
             display: flex;
         }
+        
+        
 
         #navbar::before {
             content: "";
-            background-color: rgb(0, 0, 0);
+            background-color: rgb(243, 24, 24);
             position: absolute;
             top: 0px;
             left: 0px;
@@ -62,20 +67,24 @@
             font-size: 1.3rem;
 
         }
+        
 
         #navbar ul li a {
-            color: black;
+            color: rgb(0, 0, 0);
             font-weight: bold;
             display: block;
             text-decoration: none;
             border-radius: 12px;
             padding: 3px 20px;
-            margin-top: 18px;
+            margin-top: 28px;
+            margin-right: 40px;
+            cursor: pointer;
         }
+        
 
         #navbar ul li a:hover {
-            background-color: black;
-            color: white;
+            background-color: rgb(255, 255, 255);
+            color:rgb(238, 13, 13);
         }
 
         .center {
@@ -85,24 +94,39 @@
 
         #home {
             display: flex;
+            color: rgb(201, 0, 0);
             flex-direction: column;
             padding: 3px 200px;
             /* height: 550px; */
-            height: 400px;
+            height: 500px;
             width: 100%;
             justify-content: center;
             align-items: center;
         }
 
+        #home h1{
+
+            color:rgb(238, 13, 13);
+            font-family: "Merriweather", serif;
+            font-size: 70px;
+
+        }
+
+        #home h4{
+            color: rgb(14, 5, 5);
+        }
+
         #home::before {
             content: "";
-            background: url('https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')no-repeat center center/cover;
+            background : url('https://static.vecteezy.com/system/resources/previews/039/668/490/non_2x/ai-generated-top-view-of-tasty-burgers-with-french-fries-on-white-background-free-photo.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
             position: absolute;
             top: 0px;
             left: 0px;
             /* background-repeat: no-repeat; */
             /* height: 100%; */
-            height: 480px;
+            height: 700px;
             width: 100%;
             z-index: -1;
             opacity: 0.89;
@@ -116,9 +140,18 @@
 
         /* Utility classes */
         .h-primary {
-            font-size: 2.3rem;
-            padding: 12px;
+            /*margin-top: 50px;*/
+            font-size: 2rem;
+            
+            
         }
+
+        .h-primary .h-primary .center{
+
+            margin-top: 40px;
+        }
+
+       
 
         .btn {
             padding: 5px 15px;
@@ -127,29 +160,40 @@
             cursor: pointer;
             color: black;
             border: 2px solid black;
-            background-color: rgb(196, 140, 147);
+            background-color: rgb(214, 25, 47);
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1rem;
+        }
+
+        .foodoptions{
+            padding-top: 140px;
+            padding-left: 50px;
         }
 
         .servises {
             display: flex;
+            padding-top: 20px;
+            padding-left: 50px;
+            
+            
         }
 
         .box {
-            border: 4px solid rgb(133, 43, 43);
-            background-color: rgb(213, 225, 228);
-            border-radius: 15px;
+            /*border: 4px solid rgb(133, 43, 43);*/
+            background-color: rgb(255, 255, 255);
+            border-radius: 20px;
             text-align: center;
             /* margin: 3px 3px; */
-            margin: 3px 3px 15px 3px;
+            margin: 4px 40px 40px 5px;
         }
 
         .box img {
-            height: 200px;
-            padding: 10px;
+            height: 120px;
+            width: 130px;
+            padding: 1px;
             margin: 10px 10px;
-            border-radius: 80px;
+            border-radius: 100px;
+            cursor: pointer;
         }
 
         .client-item img {
@@ -213,7 +257,44 @@
             padding: 3px 8px;
             border-radius: 4px;
         }
-        
+
+        /*About*/
+
+       .about .about_main{
+         display: flex;
+         align-items: center;
+         margin-left: 10px;
+       }
+       
+       .about .about_main .about-text{
+            margin-left: 60px;
+            width: 600px;
+       }
+
+       .about .about_main .about-text h1 span{
+             color: yellow;
+             margin-right: 15px;
+             font-family: mv boli;
+             
+       }
+       .about .about_main .about-text h1{
+             font-size: 55px;
+             position: relative;
+             bottom: 50px;
+
+       }
+       .about .about_main .about-text h3{
+              font-size: 30px;
+              margin: 0 0 50px;
+       }
+       .about .about_main .about-text p{
+              width: 600px;
+              text-align: justify;
+              margin-right: 30px;
+              line-height: 20px;
+              font-size: large;
+
+       }
         /* .form-group{
             display: flex;
             flex-direction: column;
@@ -221,13 +302,43 @@
             align-items: center;
         } */
         footer{
-            padding: 3px;
-            background-color: black;
-            color: white;
+            width: 100%;
+            padding: 3px 0 0 20px;
+            background-color: rgb(247, 242, 242);
+            color: rgb(3, 1, 1);
+            height: 300px;
+            
         }
+        footer .footer-main{
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr ;
+            
+        }
+        footer .footer-main .footer-tag{
+                    margin-bottom: 10px;
+                    
+        }
+        footer .footer-main .footer-tag h2{
+                 color: black;
+                 margin-bottom: 25px;
+                 font-size: 20px;
+        }
+        footer .footer-main .footer-tag p{
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        footer .footer-main .footer-tag p:hover{
+            color: red;
+        }
+        footer .center{
+            margin-top: 40px;
+        }
+
         #log{
             margin-top: 10px;
             margin-left: 500px;
+        
 
         }
         #navbar ul li button {
@@ -243,13 +354,16 @@
             background-color: black;
             color: white;
         }
+        
+        
+        
     </style>
 </head>
 
 <body>
     <nav id="navbar">
         <div id="logo">
-            <img src="https://img.lovepik.com/element/45007/2413.png_300.png" alt="MyonlineMail.com">
+            <img src='https://play-lh.googleusercontent.com/qAnSeBvgUFft3kF9WilP8b1CJrJpqAR3blnKDsbntKOBbSNhfN5eos0oBB0lJADri7AB'>
         </div>
         <ul>
             <!-- <li class="items"><a href="#">Home</a></li>
@@ -257,84 +371,153 @@
             <li class="items"><a href="#">About</a></li>
             <li class="items"><a href="#">Contact Us</a></li>
             <li><button class="items" id="log">Log in<a href="#"></a></button></li> -->
-            <li class="items"><a th:href="@{/}">Home</a></li>
-            <li class="items"><a th:href="@{/services}">Service</a></li>
+            <li class="items"><a th:href="@{/home}">Home</a></li>
+            
             <li class="items"><a th:href="@{/about}">About</a></li>
-            <li class="items"><a th:href="@{/contact}">Contact Us</a></li>
+  
+            <li class="items"><a th:href="@{/login}">Login</a></li>
+            <li class="items"><a th:href="@{/SignUp}">Sign up</a></li>
         </ul>
+        
     </nav>
     <section id="home">
-        <h1 class="h-primary">Welcome to MyOnlineMeal</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo maxime nihil eveniet voluptatibus adipisci
-            reiciendis qui, eligendi pariatur </p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid, adipisci?</p>
+        <h1 class="h-primary">FoodExpress</h1>
+        <h4 class="h-primary">Discover the best food & restaurants. Order now!</h4>
+        <div>
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        
+      
         <!-- <button class="btn">Order Now</button> -->
         <form th:action="@{/login}" method="get">
             <input type="submit" value="Order Now" class="btn">
         </form>
     </section>
     <section id="services-container">
-        <h1 class="h-primary center">Our Servises</h1>
+        <h1 class="foodoptions">Order your best food options</h1>
         <div class="servises">
             <div class="box">
-                <img src="https://img.lovepik.com/element/45007/2403.png_300.png" alt="">
-                <h2 class="h-secondary center">Food Ordering</h2>
-                <p>Lorem ipsum,reiciendis placeat modi necessitatibus similique voluptates quidem? Doloribus debitis
-                    reiciendis dolorem vel minima mollitia dolorum aliquam!</p>
+                <img src="https://img.freepik.com/premium-photo/chicken-biryani-spicy-indian-malabar-biryani-hyderabadi-biryani-top-view-white-background_1055142-8.jpg" alt="">
+                <h2 class="h-secondary center">Biryani</h2>
+                
             </div>
             <div class="box">
-                <img src="https://img.lovepik.com/element/45007/2408.png_300.png" alt="">
-                <h2 class="h-secondary center">Food Delevaring</h2>
-                <p>Lorem ipsum, reiciendis placeat modi necessitatibus similique voluptates quidem? Doloribus debitis
-                    reiciendis dolorem vel minima mollitia dolorum aliquam!</p>
+                <img src="https://png.pngtree.com/png-vector/20240715/ourmid/pngtree-develop-an-8k-3d-high-definition-image-portraying-a-classic-masala-png-image_13076187.png" alt="">
+                <h2 class="h-secondary center">Dosa </h2>
+            
             </div>
             <div class="box">
-                <img src="https://img.lovepik.com/element/45007/2411.png_300.png" alt="">
-                <h2 class="h-secondary center">Food </h2>
-                <p>Lorem ipsum, reiciendis placeat modi necessitatibus similique voluptates quidem? Doloribus debitis
-                    reiciendis dolorem vel minima mollitia dolorum aliquam!</p>
+                <img src="https://static.vecteezy.com/system/resources/previews/021/952/464/original/tasty-hamburger-on-transparent-background-png.png" alt="">
+                <h2 class="h-secondary center">Burger</h2>
+                
+            </div>
+            <div class="box">
+                <img src="https://southexidli.co.in/wp-content/uploads/2023/03/double-idli.png" alt="">
+                <h2 class="h-secondary center">Idli </h2>
+            
+            </div>
+            <div class="box">
+                <img src="https://static.vecteezy.com/system/resources/previews/027/536/078/original/birthday-cake-happy-birthday-cake-birthday-cake-transparent-background-ai-generative-free-png.png" alt="">
+                <h2 class="h-secondary center">Cake </h2>
+            
+            </div>
+            <div class="box">
+                <img src="https://static.vecteezy.com/system/resources/previews/024/108/747/original/tasty-colorful-ice-cream-cup-with-syrups-and-fruits-on-transparent-background-png.png" alt="">
+                <h2 class="h-secondary center">Ice cream </h2>
+            
             </div>
         </div>
     </section>
-    <section id="client-section">
-        <h1 class="h-primary center">Our Clients</h1>
-        <div class="clients">
-            <div class="client-item">
-                <img src="https://cdn.pixabay.com/photo/2016/08/09/17/52/instagram-1581266_640.jpg" alt="">
-                <img src="https://cdn.pixabay.com/photo/2017/12/06/04/56/facebook-3000954_640.png" alt="">
-                <img src="https://cdn.pixabay.com/photo/2016/11/22/06/47/twitter-1848505_640.png" alt="">
-                <!-- <img  id="s" src="https://cdn.pixabay.com/photo/2018/05/08/21/28/apple-3384010_640.png" alt=""> -->
-                <img src="https://cdn.pixabay.com/photo/2016/10/23/06/04/google-1762248_640.png" alt="">
-                <img src="https://cdn.pixabay.com/photo/2014/04/02/10/58/sign-305112_640.png" alt="">
+    <div class="servises">
+        <div class="box">
+            <img src="https://www.eatthis.com/wp-content/uploads/sites/4/2019/10/chick-fil-a-market-salad-with-grilled-nuggets.jpg?resize=343" alt="">
+            <h2 class="h-secondary center">Salad</h2>
+            
+        </div>
+        <div class="box">
+            <img src="https://thumbs.dreamstime.com/b/vada-donut-made-urad-dal-flour-indian-snack-food-sambar-chutney-44383666.jpg" alt="">
+            <h2 class="h-secondary center">Vada </h2>
+        
+        </div>
+        <div class="box">
+            <img src="https://shop.sankalpfoods.com/wp-content/uploads/2020/10/Upma.jpg" alt="">
+            <h2 class="h-secondary center">Upma</h2>
+            
+        </div>
+        <div class="box">
+            <img src="https://static.vecteezy.com/system/resources/previews/025/140/282/original/chocolate-milkshake-on-plastic-cup-transparent-background-ai-generated-free-png.png" alt="">
+            <h2 class="h-secondary center">Shake </h2>
+        
+        </div>
+        <div class="box">
+            <img src="https://img.freepik.com/premium-photo/delicious-8k-resolution-pizza-with-mushrooms-onion-olives_899449-32898.jpg" alt="">
+            <h2 class="h-secondary center">Pizza </h2>
+        
+        </div>
+        <div class="box">
+            <img src="https://png.pngtree.com/png-clipart/20230518/original/pngtree-kadai-paneer-curry-png-image_9164812.png" alt="">
+            <h2 class="h-secondary center">Paneer </h2>
+        
+        </div>
+    </div>
+        
+    <div class="about" id="About">
+        <div class="about_main">
+            <div class="image">
+                <img src="https://www.pngarts.com/files/2/Salad-Transparent.png" alt="">
+                
             </div>
+         <div class="about-text">
+            <h1><span>About</span>Us</h1>
+            <h3>Why choose us?</h3>
+            <p>Our food app is designed to bring you fresh and flavorful meals from the best local chefs 
+                and restaurants, ensuring quality and variety for every taste. With a vast selection of 
+                cuisines, customizable orders, and options for all dietary needs, your perfect meal is 
+                just a few taps away. Our intuitive app interface makes ordering seamless, and real-time 
+                tracking keeps you informed every step of the way. Trusted by thousands, we’re here to make 
+                your dining experience fast, convenient, and delightful.
+
+            </p>
+         </div>   
         </div>
-    </section>
-    <section id="contact">
-        <h1 class="h-primary center">Contact Us</h1>
-        <div class="contact-box">
-            <form action="">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" name="myname" id="name" placeholder="Enter your name:">
-                </div>
-                <div class="form-group">
-                    <label for="name">Email:</label>
-                    <input type="email" name="myname" id="email" placeholder="Enter your email:">
-                </div>
-                <div class="form-group">
-                    <label for="name">Phone No:</label>
-                    <input type="phone" name="myname" id="email" placeholder="Enter your phone number:">
-                </div>
-                <div class="form-group">
-                    <label for="inf">Massege</label>
-                    <textarea name="myText" id="inf" cols="30" rows="10"></textarea>
-                </div>
-            </form>
-        </div>
-    </section>
+    </div>
+   
     <footer>
+        <div class="footer-main">
+        
+            <div class="footer-tag">
+                <h2>About FoodExpress</h2>
+                <p>About us</p>
+                <p>Work with us</p>
+                <p>Contact us</p>
+                <p>Report</p>
+            </div>
+            <div class="footer-tag">
+                <h2>Learn more</h2>
+                <p>Help & support</p>
+                <p>Patner with us</p>
+                
+            </div>
+            <div class="footer-tag">
+                <h2>Legal</h2>
+                <p>Terms & conditions</p>
+                <p>Cookie policy</p>
+                <p>Privacy policy</p>
+                <p>Security </p>
+            </div>
+            <div class="footer-tag">
+                <h2>Location</h2>
+                <p>Delhi</p>
+                <p>Hyderabad</p>
+                <p>Banglore </p>
+                <p>Mumbai </p>
+            </div>
+    
+
+        </div>  
+
         <div class="center">
-            Copyright &copy; www.MyOnlineMeal.com. All rights reserved
+            <h3>Copyright &copy; www.FoodExpress.com. All rights reserved</h3>
         </div>
     </footer>
 </body>

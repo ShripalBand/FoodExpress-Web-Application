@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,21 +8,31 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-image: url('http://www.zingerbug.com/Backgrounds/background_images/light_pink_and_blue_gradient.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            height: 300px;
+            width: 100%;
+            z-index: -5;
+            opacity: 0.80;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 400px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
 
         h2 {
             text-align: center;
-            color: #333;
+            color: #000000;
         }
 
         .form-group {
@@ -35,10 +46,10 @@
         }
 
         input, textarea, select {
-            width: 100%;
+            width: 90%;
             padding: 8px;
             font-size: 1em;
-            border: 1px solid #ccc;
+            border: 1px solid #afadad;
             border-radius: 4px;
         }
 
@@ -48,24 +59,24 @@
         }
 
         button {
-            background-color: #4CAF50;
+            background-color: #e45908;
             color: white;
             padding: 10px 20px;
             font-size: 1.2em;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             cursor: pointer;
             width: 100%;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #e45908;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Feedback !!</h2>
+        <h2>Feedback</h2>
 
         <form th:action="@{/submitFeedback}" method="post" >
             <div class="form-group">
@@ -79,10 +90,10 @@
             </div>
 
             <div class="form-group">
-                <label for="rating">Rating:</label>
+                <label for="rating">Rating</label>
                 <select id="rating" name="rating"  required>
                     <option value="1">1 - Poor</option>
-                    <option value="2">2 - Fair</option>
+                    <option value="2">2 - Average</option>
                     <option value="3">3 - Good</option>
                     <option value="4">4 - Very Good</option>
                     <option value="5">5 - Excellent</option>
@@ -94,45 +105,8 @@
                 <textarea id="review" name="review"  required></textarea>
             </div>
 
-            <button type="submit" onclick="return showAlert()">Submit</button>
+            <button type="submit">Submit</button>
         </form>
     </div>
 </body>
-<script>
-    function showAlert() {
-       
-        alert("Feedback submited successfully !!");
-        return true; // Allow the form to submit after the alert
-    }
-</script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
